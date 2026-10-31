@@ -4,7 +4,11 @@
   "private": true,
   "description": "Resomix design tokens, guidelines and contrast checks for the live app and the v3 (calm) direction.",
   "type": "module",
-  "files": ["tokens", "docs"],
+  "files": [
+    "tokens",
+    "docs",
+    "assets"
+  ],
   "exports": {
     "./rx.css": "./tokens/rx.css",
     "./pixels.css": "./tokens/pixels.css",
@@ -14,7 +18,10 @@
   "scripts": {
     "build": "node scripts/build.mjs && node scripts/overview.mjs",
     "check": "node scripts/check-contrast.mjs",
-    "test": "npm run build && npm run check && git diff --exit-code tokens/"
+    "test": "npm run build && npm run check && git diff --exit-code tokens/",
+    "capture": "node --experimental-websocket scripts/capture-lab.mjs"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }
