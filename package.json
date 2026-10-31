@@ -12,7 +12,7 @@
     "./v3/tokens.json": "./tokens/v3/tokens.json"
   },
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs && node scripts/overview.mjs",
     "check": "node scripts/check-contrast.mjs",
     "test": "npm run build && npm run check && git diff --exit-code tokens/"
   },

@@ -2,6 +2,10 @@
 
 One place for the Resomix design tokens, the rules for using them, and a contrast check that keeps them accessible.
 
+![Resomix design system overview: surfaces, text and accent colours with their contrast ratios, lines and controls, type, spacing and shape](docs/overview.svg)
+
+The picture is drawn from `tokens/rx.json` by `scripts/overview.mjs`, so `npm run build` keeps it in step with the tokens.
+
 The repo has two layers:
 
 | Layer | What it is | Files |
