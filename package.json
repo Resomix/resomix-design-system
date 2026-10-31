@@ -1,0 +1,20 @@
+{
+  "name": "@resomix/design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Resomix design tokens, guidelines and contrast checks for the live app and the v3 (calm) direction.",
+  "type": "module",
+  "files": ["tokens", "docs"],
+  "exports": {
+    "./rx.css": "./tokens/rx.css",
+    "./pixels.css": "./tokens/pixels.css",
+    "./rx.json": "./tokens/rx.json",
+    "./v3/tokens.json": "./tokens/v3/tokens.json"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check-contrast.mjs",
+    "test": "npm run build && npm run check && git diff --exit-code tokens/"
+  },
+  "engines": { "node": ">=18" }
+}

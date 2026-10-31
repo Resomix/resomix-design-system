@@ -1,0 +1,59 @@
+/* Generated from tokens/rx.json by scripts/build.mjs. Do not edit by hand. */
+
+:root {
+  --rx-color-canvas: #050505;
+  --rx-color-surface: #111111;
+  --rx-color-surface-raised: #171717;
+  --rx-color-overlay: #ffffff0a;
+  --rx-color-text-primary: #fffffff5;
+  --rx-color-text-secondary: #ffffffcc;
+  --rx-color-text-muted: #ffffffb8;
+  --rx-color-disabled: #ffffff80; /* was #ffffff6b */
+  --rx-color-border-subtle: #ffffff17;
+  --rx-color-border-default: #ffffff29;
+  --rx-color-border-control: #ffffff66; /* new */
+  --rx-color-border-strong: #ffffff99; /* was #ffffff3d */
+  --rx-color-accent: #ee4a26;
+  --rx-color-accent-hover: #f46545;
+  --rx-color-accent-text: #ff7a5c; /* new */
+  --rx-color-accent-soft: #ee4a2624;
+  --rx-color-on-accent: #050505; /* new */
+  --rx-color-focus: #ff8f74;
+  --rx-color-selected: #ee4a260f;
+  --rx-color-playing: #ee4a2633;
+  --rx-color-score-fill: #ffffff85;
+  --rx-color-error: #ff7660;
+  --rx-color-success: #63d28f;
+  --playlist-divider: #ffffff17;
+  --playlist-divider-strong: #ffffff24;
+
+  --color-primary: #ffffff;
+  --color-secondary: #000000;
+  --color-primary-background: #000000;
+  --color-secondary-background: #111111;
+  --color-noise-background: #000000;
+  --color-primary-hover: #b9b9b9;
+  --color-text-primary: #000000;
+  --color-text-secondary: #ffffff;
+  --color-light-theme: #b9b9b9;
+  --color-neon-orange: #ee4a26;
+
+  --rx-radius-panel: 0;
+  --rx-radius-control: 2px;
+  --rx-radius-tag: 2px;
+  --rx-notch-sm: 6px;
+  --rx-notch-md: 10px;
+  --rx-ring: 0 0 0 1px #050505f2, 0 0 0 3px #ff8f74eb;
+  --rx-duration-fast: .12s;
+  --rx-duration-base: .16s;
+  --rx-ease-standard: ease;
+}
+
+.light {
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+  --color-primary-background: #f6f6f4; /* was #000000 */
+  --color-secondary-background: #f0f0ee; /* was #111111 */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #000000;
+}
