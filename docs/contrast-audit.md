@@ -1,5 +1,7 @@
 # Contrast audit, 2026-10-31
 
+> **Superseded by v3.** These fixes were made to the pre-v3 tokens, now in `tokens/legacy/`. v3 replaces them: solid colours per theme, `text-accent` for small orange text, `border-control` for operable edges and a real Daylight theme, all checked by `npm run check`. Kept for history.
+
 Measured on `staging-frontend.resomix.com/lab/design` against WCAG 2.x. Each ratio is the worst case across the canvas, surface, raised, input and overlay grounds and the selected, playing and accent-soft tints, with translucent tokens composited over the surface. `npm run check` reproduces these numbers.
 
 ## Fixed

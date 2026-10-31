@@ -1,187 +1,165 @@
-// Draws docs/overview.svg, the picture of the system shown on the README, from tokens/rx.json.
+// Draws docs/overview.svg, the picture of the v3 system shown on the README, from tokens/v3/tokens.json.
 // Run: npm run build
 import { readFileSync, writeFileSync } from 'node:fs';
-import { parse, over, ratio, toHex } from './lib/color.mjs';
+import { parse, ratio } from './lib/color.mjs';
 
 const root = new URL('../', import.meta.url);
-const t = JSON.parse(readFileSync(new URL('tokens/rx.json', root), 'utf8'));
-const d = Object.fromEntries(Object.entries(t.color.dark).map(([k, v]) => [k, v.value]));
+const v3 = JSON.parse(readFileSync(new URL('tokens/v3/tokens.json', root), 'utf8'));
+const tok = (group, name) => v3[group].tokens.find((t) => t.name === name).value;
+const px = (group, name) => parseFloat(tok(group, name));
 
 const SANS = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 const MONO = "'Fira Code', ui-monospace, Menlo, Consolas, monospace";
 const DISPLAY = "Benzin, 'Arial Black', Arial, sans-serif";
 
-const canvas = parse(d['rx-color-canvas']);
-const surface = over(parse(d['rx-color-surface']), canvas);
-// A token as an opaque colour on the ground it sits on.
-const on = (name, ground = surface) => toHex(over(parse(d[name]), ground));
-const fmt = (n) => `${n.toFixed(2)}:1`;
-
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const text = (x, y, s, o = {}) =>
-  `<text x="${x}" y="${y}" font-family="${o.font ?? SANS}" font-size="${o.size ?? 14}"` +
-  ` font-weight="${o.weight ?? 400}" fill="${o.fill ?? on('rx-color-text-primary', canvas)}"` +
-  (o.anchor ? ` text-anchor="${o.anchor}"` : '') +
-  (o.ls ? ` letter-spacing="${o.ls}"` : '') + `>${o.raw ? s : esc(s)}</text>`;
+  `<text x="${x}" y="${y}" font-family="${o.font ?? SANS}" font-size="${o.size ?? 15}" font-weight="${o.weight ?? 400}"` +
+  ` fill="${o.fill}"${o.anchor ? ` text-anchor="${o.anchor}"` : ''}${o.ls ? ` letter-spacing="${o.ls}"` : ''}>${esc(s)}</text>`;
 const rect = (x, y, w, h, o = {}) =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${o.fill ?? 'none'}"` +
-  (o.stroke ? ` stroke="${o.stroke}" stroke-width="${o.sw ?? 1}"` : '') +
-  (o.rx ? ` rx="${o.rx}"` : '') + '/>';
-// Rectangle with the top-right corner cut, the live app's notch.
-const notched = (x, y, w, h, n, o = {}) =>
-  `<path d="M${x} ${y}H${x + w - n}L${x + w} ${y + n}V${y + h}H${x}Z" fill="${o.fill ?? 'none'}"` +
-  (o.stroke ? ` stroke="${o.stroke}" stroke-width="${o.sw ?? 1}"` : '') + '/>';
+  (o.stroke ? ` stroke="${o.stroke}" stroke-width="${o.sw ?? 1}"` : '') + (o.rx ? ` rx="${o.rx}"` : '') + '/>';
+// Line icons on a 24px grid, drawn at `size` px.
+const ICONS = { check: 'M5 12l5 5 9-10', clock: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7v5l3 2', info: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11v6M12 7.5v.5', alert: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7v6M12 16v.5' };
+const icon = (name, x, y, size, color) =>
+  `<g transform="translate(${x} ${y}) scale(${size / 24})" fill="none" stroke="${color}" stroke-width="${1.5 * 24 / size}" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[name]}"/></g>`;
 
 const W = 1600;
 const P = 64;
 const INNER = W - 2 * P;
-const panelEdge = on('rx-color-border-default', canvas);
-const panel = (x, y, w, h) => rect(x + 0.5, y + 0.5, w - 1, h - 1, { fill: toHex(surface), stroke: panelEdge });
-const muted = on('rx-color-text-muted');
-const label = (x, y, s) =>
-  rect(x, y - 22, 16, 2, { fill: d['rx-color-accent'] }) +
-  text(x, y, s.toUpperCase(), { font: MONO, size: 12, fill: on('rx-color-text-muted', canvas), ls: 1.5 });
-
+const studio = (n) => tok('color', n).dark;
 const out = [];
 
-// Header
-out.push(text(P, 96, 'RESOMIX DESIGN SYSTEM', { size: 40, weight: 300, ls: 1 }));
-out.push(text(P, 130, 'The tokens of the live app, checked against WCAG AA contrast on every push.', {
-  size: 16, weight: 300, fill: on('rx-color-text-secondary', canvas),
-}));
-const badge = '✓ CONTRAST CHECKED IN CI';
-const bw = badge.length * 7.6 + 32;
-out.push(rect(W - P - bw + 0.5, 72.5, bw - 1, 31, { stroke: d['rx-color-success'], rx: 2 }));
-out.push(text(W - P - bw / 2, 93, badge, { font: MONO, size: 12, fill: d['rx-color-success'], anchor: 'middle', ls: 1 }));
+// Header, on the Studio canvas
+out.push(text(P, 100, 'Resomix design system', { size: 40, weight: 600, fill: studio('text-primary'), ls: -0.4 }));
+out.push(text(P, 136, 'v3, calm. One set of names, two themes, every pair checked against WCAG AA.', { size: 18, fill: studio('text-secondary') }));
+const badge = 'WCAG AA in both themes';
+const bw = badge.length * 7.4 + 52;
+out.push(rect(W - P - bw + 0.5, 78.5, bw - 1, 31, { stroke: studio('status-success'), rx: 999 }));
+out.push(icon('check', W - P - bw + 14, 86, 16, studio('status-success')));
+out.push(text(W - P - bw + 36, 99, badge, { size: 13, weight: 500, fill: studio('status-success') }));
 
-// Surfaces
-let y = 200;
-out.push(label(P, y, 'Surfaces'));
-const grounds = [
-  ['rx-color-canvas', canvas],
-  ['rx-color-surface', surface],
-  ['rx-color-surface-raised', over(parse(d['rx-color-surface-raised']), canvas)],
-  ['rx-color-overlay', over(parse(d['rx-color-overlay']), surface), 'on surface'],
-  ['rx-color-selected', over(parse(d['rx-color-selected']), surface), 'on surface'],
-  ['rx-color-playing', over(parse(d['rx-color-playing']), surface), 'on surface'],
-];
-const sw = (INNER - 5 * 16) / 6;
-grounds.forEach(([name, c, note], i) => {
-  const x = P + i * (sw + 16);
-  out.push(rect(x + 0.5, y + 20.5, sw - 1, 109, { fill: toHex(c), stroke: panelEdge }));
-  out.push(text(x, y + 156, `--${name}`, { font: MONO, size: 13 }));
-  out.push(text(x, y + 176, `${d[name]}${note ? ` · ${note}` : ''}`, { font: MONO, size: 12, fill: on('rx-color-text-muted', canvas) }));
-});
-
-// Text and accent, with each ratio measured on the surface
-y = 440;
+// One panel per theme
 const half = (INNER - 24) / 2;
-const rows = (x, title, items) => {
-  out.push(label(x, y, title));
-  out.push(panel(x, y + 20, half, 280));
-  out.push(text(x + half - 24, y + 48, 'CONTRAST ON SURFACE', { font: MONO, size: 12, fill: muted, anchor: 'end', ls: 1 }));
-  items.forEach(([name, sample, draw], i) => {
-    const by = y + 92 + i * 56;
-    if (draw) out.push(draw(x + 24, by));
-    else out.push(text(x + 24, by, sample, { size: 18, weight: 300, fill: on(name) }));
-    out.push(text(x + 24, by + 22, `--${name}`, { font: MONO, size: 12, fill: muted }));
-    const fg = name === 'rx-color-on-accent' ? parse(d[name]) : parse(on(name));
-    const bg = name === 'rx-color-on-accent' ? parse(d['rx-color-accent']) : surface;
-    out.push(text(x + half - 24, by + 8,
-      `<tspan fill="${d['rx-color-success']}">✓</tspan> ${fmt(ratio(fg, bg))}`,
-      { font: MONO, size: 14, anchor: 'end', raw: true }));
+const theme = (x, y, th, title, sub) => {
+  const c = (n) => tok('color', n)[th];
+  const rLg = px('radius', 'radius-lg');
+  const rMd = px('radius', 'radius-md');
+  const rSm = px('radius', 'radius-sm');
+  const inner = half - 48;
+  out.push(rect(x + 0.5, y + 0.5, half - 1, 640 - 1, { fill: c('bg-canvas'), stroke: c('border-default'), rx: rLg }));
+  out.push(text(x + 24, y + 44, title, { size: 20, weight: 600, fill: c('text-primary') }));
+  out.push(text(x + half - 24, y + 44, sub, { size: 13, fill: c('text-muted'), anchor: 'end' }));
+
+  // Grounds
+  const names = ['bg-canvas', 'bg-surface', 'bg-raised', 'bg-sunken', 'bg-overlay', 'bg-selected'];
+  const sw = (inner - 5 * 8) / 6;
+  names.forEach((n, i) => {
+    const sx = x + 24 + i * (sw + 8);
+    out.push(rect(sx + 0.5, y + 68.5, sw - 1, 47, { fill: c(n), stroke: c('border-default'), rx: rSm }));
+    out.push(text(sx, y + 134, n.replace('bg-', ''), { size: 12, fill: c('text-muted') }));
+    out.push(text(sx, y + 150, c(n).startsWith('#') ? c(n) : '', { font: MONO, size: 12, fill: c('text-muted') }));
   });
+
+  // Text on a card, with contrast on the surface
+  const cy = y + 172;
+  out.push(rect(x + 24.5, cy + 0.5, inner - 1, 196, { fill: c('bg-surface'), stroke: c('border-default'), rx: rMd }));
+  const rows = [
+    ['text-primary', 'Pick up where you left off', 20, 600],
+    ['text-secondary', 'Start from a track you love. We find tracks that sound like it.', 15, 400],
+    ['text-muted', 'Opened 2 hours ago', 12, 400],
+    ['text-accent', 'Playing · Late-night techno', 13, 500],
+  ];
+  rows.forEach(([n, s, size, weight], i) => {
+    const ty = cy + 40 + i * 44;
+    out.push(text(x + 44, ty, s, { size, weight, fill: c(n) }));
+    out.push(text(x + 24 + inner - 20, ty, `${ratio(parse(c(n)), parse(c('bg-surface'))).toFixed(1)}:1`, { font: MONO, size: 12, fill: c('text-muted'), anchor: 'end' }));
+  });
+
+  // Status: always an icon and a word
+  const statuses = [['status-success', 'check', 'Keep'], ['status-warning', 'clock', 'Maybe'], ['status-info', 'info', 'Analysing'], ['status-danger', 'alert', 'Failed']];
+  let px0 = x + 24;
+  const sy = y + 392;
+  for (const [n, ic, word] of statuses) {
+    const w = word.length * 7.6 + 46;
+    out.push(rect(px0 + 0.5, sy + 0.5, w - 1, 27, { stroke: c(n), rx: 999 }));
+    out.push(icon(ic, px0 + 10, sy + 7, 14, c(n)));
+    out.push(text(px0 + 30, sy + 19, word, { size: 13, weight: 500, fill: c(n) }));
+    px0 += w + 8;
+  }
+  out.push(rect(px0 + 0.5, sy + 0.5, 63, 27, { stroke: c('border-control'), rx: 999 }));
+  out.push(text(px0 + 32, sy + 19, 'Pass', { size: 13, weight: 500, fill: c('text-secondary'), anchor: 'middle' }));
+
+  // Controls
+  const by = y + 444;
+  out.push(rect(x + 24, by, 196, 48, { fill: c('accent'), rx: rSm }));
+  out.push(text(x + 122, by + 30, 'Find similar tracks', { size: 15, weight: 600, fill: c('text-on-accent'), anchor: 'middle' }));
+  out.push(rect(x + 236.5, by + 4.5, 143, 39, { stroke: c('border-control'), rx: rSm }));
+  out.push(text(x + 308, by + 29, 'Save to crate', { size: 15, weight: 500, fill: c('text-primary'), anchor: 'middle' }));
+  out.push(rect(x + 400.5, by + 4.5, 127, 39, { stroke: c('border-strong'), rx: rSm }));
+  out.push(rect(x + 397, by + 1, 134, 46, { stroke: c('focus'), sw: 2, rx: rSm + 3 }));
+  out.push(text(x + 464, by + 29, 'Focused', { size: 15, weight: 500, fill: c('text-primary'), anchor: 'middle' }));
+
+  // A selected choice card: accent edge plus a check and a word
+  const ky = y + 516;
+  out.push(rect(x + 25, ky + 1, inner - 2, 94, { fill: c('bg-selected'), stroke: c('accent'), sw: 2, rx: rMd }));
+  out.push(text(x + 44, ky + 36, 'Sound alike', { size: 16, weight: 600, fill: c('text-primary') }));
+  out.push(text(x + 44, ky + 62, 'Tracks that sound like your reference.', { size: 13, fill: c('text-secondary') }));
+  out.push(icon('check', x + 24 + inner - 90, ky + 23, 16, c('text-accent')));
+  out.push(text(x + 24 + inner - 20, ky + 36, 'Selected', { size: 13, weight: 500, fill: c('text-accent'), anchor: 'end' }));
 };
-rows(P, 'Text', [
-  ['rx-color-text-primary', 'Titles and main text'],
-  ['rx-color-text-secondary', 'Supporting text'],
-  ['rx-color-text-muted', 'Labels and hints'],
-  ['rx-color-disabled', 'Searching…'],
-]);
-rows(P + half + 24, 'Accent and state', [
-  ['rx-color-accent-text', 'Selected · Playing'],
-  ['rx-color-error', 'Couldn’t load your playlists'],
-  ['rx-color-success', 'Saved to your crate'],
-  ['rx-color-on-accent', '', (x, by) =>
-    notched(x, by - 20, 150, 28, 6, { fill: d['rx-color-accent'] }) +
-    text(x + 75, by - 1, 'PRIMARY ACTION', { font: MONO, size: 12, weight: 500, fill: d['rx-color-on-accent'], anchor: 'middle', ls: 0.5 })],
-]);
+theme(P, 180, 'dark', 'Studio', 'Dark · default for the app');
+theme(P + half + 24, 180, 'light', 'Daylight', 'Light · marketing, documents, print');
 
-// Lines and controls
-y = 816;
-out.push(label(P, y, 'Lines and controls'));
-out.push(panel(P, y + 20, INNER, 160));
-const edges = [
-  ['rx-color-border-subtle', 'decorative'],
-  ['rx-color-border-default', 'decorative'],
-  ['rx-color-border-control', 'controls'],
-  ['rx-color-border-strong', 'hover'],
-];
-edges.forEach(([name, note], i) => {
-  const x = P + 24 + i * 184;
-  out.push(rect(x + 0.5, y + 48.5, 151, 55, { stroke: on(name) }));
-  out.push(text(x, y + 128, `--${name.replace('rx-color-', '')}`, { font: MONO, size: 12 }));
-  out.push(text(x, y + 148, `${note} · ${fmt(ratio(parse(on(name)), surface))}`, { font: MONO, size: 12, fill: muted }));
-});
-const bx = P + 24 + 4 * 184 + 32;
-const by = y + 54;
-out.push(notched(bx, by, 236, 44, 10, { fill: d['rx-color-accent'] }));
-out.push(text(bx + 118, by + 27, 'FIND SIMILAR TRACKS', { font: MONO, size: 13, weight: 500, fill: d['rx-color-on-accent'], anchor: 'middle', ls: 0.8 }));
-out.push(rect(bx + 256.5, by + 0.5, 171, 43, { stroke: on('rx-color-border-control'), rx: 2 }));
-out.push(text(bx + 342, by + 27, 'LOAD 25 MORE', { font: MONO, size: 13, fill: on('rx-color-text-primary'), anchor: 'middle', ls: 0.8 }));
-out.push(rect(bx + 448.5, by + 0.5, 131, 43, { stroke: on('rx-color-border-strong'), rx: 2 }));
-out.push(rect(bx + 445, by - 3, 138, 50, { stroke: d['rx-color-focus'], sw: 2, rx: 4 }));
-out.push(text(bx + 514, by + 27, 'FOCUSED', { font: MONO, size: 13, fill: on('rx-color-text-primary'), anchor: 'middle', ls: 0.8 }));
-out.push(text(bx, by + 74, 'primary · secondary · keyboard focus', { font: MONO, size: 12, fill: muted }));
+// Type, spacing, radius on the Studio canvas
+const y = 868;
+const colW = (INNER - 48) / 3;
+const label = (x, s) => text(x, y, s, { size: 13, weight: 500, fill: studio('text-secondary') });
+const card = (x, h) => rect(x + 0.5, y + 16.5, colW - 1, h - 1, { fill: studio('bg-surface'), stroke: studio('border-default'), rx: px('radius', 'radius-md') });
 
-// Type, spacing, shape
-y = 1044;
-const third = (INNER - 724 - 48) / 2;
-out.push(label(P, y, 'Type'));
-out.push(panel(P, y + 20, 724, 224));
-const type = [
-  ['NIGHT SIGNAL', { size: 30, weight: 300 }, 'font-helvetica · titles, reading'],
-  ['124 BPM · 8A · 6:42', { font: MONO, size: 20 }, 'font-fira · labels, buttons, numbers'],
-  ['RESOMIX', { font: DISPLAY, size: 30, weight: 700 }, 'font-benzin · display, landing site'],
-];
-type.forEach(([s, o, meta], i) => {
-  const ty = y + 82 + i * 64;
-  out.push(text(P + 24, ty, s, { fill: on('rx-color-text-primary'), ...o }));
-  out.push(text(P + 700, ty, meta, { font: MONO, size: 12, fill: muted, anchor: 'end' }));
+out.push(label(P, 'Type'));
+out.push(card(P, 300));
+const styles = v3.type.groups.flatMap((g) => g.styles.map((s) => ({ ...s, family: s.family ?? g.family })));
+const pick = ['display-lg', 'page-title', 'section-title', 'card-title', 'body', 'label', 'caption', 'data'];
+let ty = y + 24;
+pick.map((n) => styles.find((s) => s.name === n)).forEach((s) => {
+  const font = s.family === 'mono' ? MONO : s.family === 'display' ? DISPLAY : SANS;
+  const size = Math.min(parseFloat(s.fontSize), 36);
+  ty += size + 12;
+  const short = { 'display-lg': 'Built for diggers', body: 'Start from a track you love.' };
+  out.push(text(P + 20, ty, short[s.name] ?? s.sample, { font, size, weight: s.fontWeight, fill: studio('text-primary') }));
+  out.push(text(P + colW - 20, ty, s.name, { font: MONO, size: 12, fill: studio('text-muted'), anchor: 'end' }));
 });
 
-const sx = P + 724 + 24;
-out.push(label(sx, y, 'Spacing'));
-out.push(panel(sx, y + 20, third, 224));
-[4, 8, 12, 16, 24, 32, 48, 64].forEach((n, i) => {
-  const ry = y + 44 + i * 24;
-  out.push(text(sx + 24, ry + 13, `--px-${n}`, { font: MONO, size: 12, fill: muted }));
-  out.push(rect(sx + 100, ry + 2, n * 3, 14, { fill: on('rx-color-score-fill') }));
+const sx = P + colW + 24;
+out.push(label(sx, 'Spacing · 4px base'));
+out.push(card(sx, 300));
+v3.spacing.tokens.forEach((t, i) => {
+  const ry = y + 44 + i * 26;
+  out.push(text(sx + 20, ry + 12, t.name, { font: MONO, size: 12, fill: studio('text-muted') }));
+  out.push(rect(sx + 110, ry + 1, parseFloat(t.value) * 3, 14, { fill: studio('text-secondary'), rx: 2 }));
+  out.push(text(sx + colW - 20, ry + 12, t.value, { font: MONO, size: 12, fill: studio('text-muted'), anchor: 'end' }));
 });
 
-const hx = sx + third + 24;
-out.push(label(hx, y, 'Shape'));
-out.push(panel(hx, y + 20, third, 224));
-const shapes = [
-  ['panel 0', (x, sy) => rect(x + 0.5, sy + 0.5, 55, 55, { stroke: on('rx-color-border-control') })],
-  ['control 2', (x, sy) => rect(x + 0.5, sy + 0.5, 55, 55, { stroke: on('rx-color-border-control'), rx: 2 })],
-  ['notch 6', (x, sy) => notched(x, sy, 56, 56, 6, { fill: d['rx-color-accent'] })],
-  ['notch 10', (x, sy) => notched(x, sy, 56, 56, 10, { fill: d['rx-color-accent'] })],
-];
-shapes.forEach(([name, draw], i) => {
-  const x = hx + 24 + i * 76;
-  out.push(draw(x, y + 52));
-  out.push(text(x, y + 132, name, { font: MONO, size: 12, fill: muted }));
+const rx0 = sx + colW + 24;
+out.push(label(rx0, 'Radius'));
+out.push(card(rx0, 300));
+v3.radius.tokens.forEach((t, i) => {
+  const col = i % 3;
+  const row = Math.floor(i / 3);
+  const bx = rx0 + 20 + col * ((colW - 40) / 3);
+  const by = y + 44 + row * 128;
+  const r = Math.min(parseFloat(t.value), 32);
+  out.push(rect(bx + 0.5, by + 0.5, 79, t.name === 'radius-pill' ? 31 : 63, { fill: studio('bg-raised'), stroke: studio('border-control'), rx: r }));
+  out.push(text(bx, by + 88, t.name.replace('radius-', ''), { size: 13, fill: studio('text-primary') }));
+  out.push(text(bx, by + 106, t.value, { font: MONO, size: 12, fill: studio('text-muted') }));
 });
-out.push(text(hx + 24, y + 176, 'Square panels. The cut corner marks', { size: 14, weight: 300, fill: on('rx-color-text-secondary') }));
-out.push(text(hx + 24, y + 198, 'the primary action and the selected card.', { size: 14, weight: 300, fill: on('rx-color-text-secondary') }));
 
-// Footer
-const H = y + 300;
-out.push(text(P, H - 32, 'Generated from tokens/rx.json by scripts/overview.mjs', { font: MONO, size: 12, fill: on('rx-color-text-muted', canvas) }));
+const H = y + 380;
+out.push(text(P, H - 30, 'Generated from tokens/v3/tokens.json by scripts/overview.mjs', { size: 12, fill: studio('text-muted') }));
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Resomix design system overview: surfaces, text and accent colours with contrast ratios, lines and controls, type, spacing and shape">
-<rect width="${W}" height="${H}" fill="${toHex(canvas)}"/>
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Resomix design system v3: Studio and Daylight themes with grounds, text contrast, status, controls and a selected card, plus type, spacing and radius">
+<rect width="${W}" height="${H}" fill="${studio('bg-canvas')}"/>
 ${out.join('\n')}
 </svg>
 `;

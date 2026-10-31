@@ -1,60 +1,47 @@
-// WCAG 2.x contrast check for tokens/rx.json. Exits 1 on any failure.
-// Text needs 4.5:1, control edges, focus and chart marks need 3:1 (WCAG 1.4.3, 1.4.11).
-// Translucent tokens are composited over the ground they sit on.
+// WCAG 2.x contrast check for the v3 tokens in both themes, plus a check that every
+// alias in tokens/compat.json points at a token that exists. Exits 1 on any failure.
+// Text needs 4.5:1; control edges, focus and chart marks need 3:1 (WCAG 1.4.3, 1.4.11).
 // Run: npm run check
 import { readFileSync } from 'node:fs';
-import { parse, over, ratio } from './lib/color.mjs';
+import { parse, ratio } from './lib/color.mjs';
 
-const t = JSON.parse(readFileSync(new URL('../tokens/rx.json', import.meta.url), 'utf8'));
-const d = Object.fromEntries(Object.entries(t.color.dark).map(([k, v]) => [k, v.value]));
-const L = t.color.legacy;
+const read = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url), 'utf8'));
+const v3 = read('tokens/v3/tokens.json');
+const compat = read('tokens/compat.json');
+const value = (name, theme) => v3.color.tokens.find((t) => t.name === name).value[theme];
 
-const canvas = parse(d['rx-color-canvas']);
-const surface = over(parse(d['rx-color-surface']), canvas);
-const grounds = {
-  canvas,
-  surface,
-  raised: over(parse(d['rx-color-surface-raised']), canvas),
-  'overlay/surface': over(parse(d['rx-color-overlay']), surface),
-  'selected/surface': over(parse(d['rx-color-selected']), surface),
-  'playing/surface': over(parse(d['rx-color-playing']), surface),
-  'accent-soft/surface': over(parse(d['rx-color-accent-soft']), surface),
-};
+const grounds = ['bg-canvas', 'bg-surface', 'bg-raised', 'bg-sunken', 'bg-overlay', 'bg-hover', 'bg-selected'];
+const content = ['bg-canvas', 'bg-surface', 'bg-raised'];
+const rules = [
+  ...['text-primary', 'text-secondary', 'text-muted', 'text-accent'].map((fg) => [fg, grounds, 4.5]),
+  ...['border-control', 'focus'].map((fg) => [fg, grounds, 3]),
+  ...['status-success', 'status-warning', 'status-danger', 'status-info'].map((fg) => [fg, content, 4.5]),
+  ...[1, 2, 3, 4, 5].map((i) => [`data-${i}`, ['bg-surface'], 3]),
+  ['text-on-accent', ['accent', 'accent-hover'], 4.5],
+  ['tool-ink', [1, 2, 3, 4, 5].map((i) => `data-${i}`), 4.5],
+];
 
-const checks = [];
-const add = (fg, bg, min, label) => checks.push({ fg, bg, min, label });
-
-for (const fg of ['rx-color-text-primary', 'rx-color-text-secondary', 'rx-color-text-muted',
-  'rx-color-accent-text', 'rx-color-error', 'rx-color-success', 'rx-color-disabled']) {
-  for (const [g, bg] of Object.entries(grounds)) add(fg, bg, 4.5, g);
-}
-for (const fg of ['rx-color-border-control', 'rx-color-border-strong', 'rx-color-focus',
-  'rx-color-score-fill', 'rx-color-accent']) {
-  for (const [g, bg] of Object.entries(grounds)) add(fg, bg, 3, g);
-}
-for (const bg of ['rx-color-accent', 'rx-color-accent-hover']) {
-  add('rx-color-on-accent', parse(d[bg]), 4.5, bg);
-}
+let total = 0;
+const failures = [];
 for (const theme of ['dark', 'light']) {
-  const c = (n) => parse(L[n][theme]);
-  const pairs = [
-    ['color-primary', 'color-primary-background'],
-    ['color-primary', 'color-secondary-background'],
-    ['color-text-primary', 'color-primary'],
-    ['color-text-secondary', 'color-secondary'],
-    ['color-text-secondary', 'color-secondary-background'],
-  ];
-  for (const [fg, bg] of pairs) checks.push({ fg: `${fg} (${theme})`, color: c(fg), bg: c(bg), min: 4.5, label: `${bg} (${theme})` });
-}
-
-let failed = 0;
-for (const ch of checks) {
-  const fg = ch.color ?? parse(d[ch.fg]);
-  const r = ratio(over(fg, ch.bg), ch.bg);
-  if (r < ch.min) {
-    failed++;
-    console.log(`✕ ${ch.fg} on ${ch.label}: ${r.toFixed(2)} (needs ${ch.min})`);
+  for (const [fg, bgs, min] of rules) {
+    for (const bg of bgs) {
+      total++;
+      const r = ratio(parse(value(fg, theme)), parse(value(bg, theme)));
+      if (r < min) failures.push(`✕ ${theme === 'dark' ? 'Studio' : 'Daylight'}: ${fg} on ${bg} is ${r.toFixed(2)} (needs ${min})`);
+    }
   }
 }
-console.log(failed ? `\n${failed} of ${checks.length} pairs fail.` : `✓ All ${checks.length} pairs pass.`);
-process.exit(failed ? 1 : 0);
+
+const known = new Set([
+  ...v3.color.tokens, ...v3.spacing.tokens, ...v3.radius.tokens, ...v3.shadow.tokens, ...v3.size.tokens, ...v3.timing.tokens,
+].map((t) => t.name));
+for (const [name, a] of Object.entries(compat.aliases)) {
+  for (const [, ref] of a.to.matchAll(/var\(--([\w-]+)\)/g)) {
+    total++;
+    if (!known.has(ref)) failures.push(`✕ alias --${name} points at --${ref}, which v3 does not define`);
+  }
+}
+
+console.log(failures.length ? `${failures.join('\n')}\n\n${failures.length} of ${total} checks fail.` : `✓ All ${total} checks pass.`);
+process.exit(failures.length ? 1 : 0);

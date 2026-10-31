@@ -1,117 +1,191 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1344" viewBox="0 0 1600 1344" role="img" aria-label="Resomix design system overview: surfaces, text and accent colours with contrast ratios, lines and controls, type, spacing and shape">
-<rect width="1600" height="1344" fill="#050505"/>
-<text x="64" y="96" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="40" font-weight="300" fill="#f5f5f5" letter-spacing="1">RESOMIX DESIGN SYSTEM</text>
-<text x="64" y="130" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="300" fill="#cdcdcd">The tokens of the live app, checked against WCAG AA contrast on every push.</text>
-<rect x="1322.1" y="72.5" width="213.39999999999998" height="31" fill="none" stroke="#63d28f" stroke-width="1" rx="2"/>
-<text x="1428.8" y="93" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#63d28f" text-anchor="middle" letter-spacing="1">✓ CONTRAST CHECKED IN CI</text>
-<rect x="64" y="178" width="16" height="2" fill="#ee4a26"/><text x="64" y="200" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9" letter-spacing="1.5">SURFACES</text>
-<rect x="64.5" y="220.5" width="231" height="109" fill="#050505" stroke="#2d2d2d" stroke-width="1"/>
-<text x="64" y="356" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f5f5f5">--rx-color-canvas</text>
-<text x="64" y="376" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9">#050505</text>
-<rect x="312.5" y="220.5" width="231" height="109" fill="#111111" stroke="#2d2d2d" stroke-width="1"/>
-<text x="312" y="356" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f5f5f5">--rx-color-surface</text>
-<text x="312" y="376" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9">#111111</text>
-<rect x="560.5" y="220.5" width="231" height="109" fill="#171717" stroke="#2d2d2d" stroke-width="1"/>
-<text x="560" y="356" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f5f5f5">--rx-color-surface-raised</text>
-<text x="560" y="376" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9">#171717</text>
-<rect x="808.5" y="220.5" width="231" height="109" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1"/>
-<text x="808" y="356" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f5f5f5">--rx-color-overlay</text>
-<text x="808" y="376" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9">#ffffff0a · on surface</text>
-<rect x="1056.5" y="220.5" width="231" height="109" fill="#1e1412" stroke="#2d2d2d" stroke-width="1"/>
-<text x="1056" y="356" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f5f5f5">--rx-color-selected</text>
-<text x="1056" y="376" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9">#ee4a260f · on surface</text>
-<rect x="1304.5" y="220.5" width="231" height="109" fill="#3d1c15" stroke="#2d2d2d" stroke-width="1"/>
-<text x="1304" y="356" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f5f5f5">--rx-color-playing</text>
-<text x="1304" y="376" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9">#ee4a2633 · on surface</text>
-<rect x="64" y="418" width="16" height="2" fill="#ee4a26"/><text x="64" y="440" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9" letter-spacing="1.5">TEXT</text>
-<rect x="64.5" y="460.5" width="723" height="279" fill="#111111" stroke="#2d2d2d" stroke-width="1"/>
-<text x="764" y="488" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd" text-anchor="end" letter-spacing="1">CONTRAST ON SURFACE</text>
-<text x="88" y="532" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#f6f6f6">Titles and main text</text>
-<text x="88" y="554" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-text-primary</text>
-<text x="764" y="540" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 17.47:1</text>
-<text x="88" y="588" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#cfcfcf">Supporting text</text>
-<text x="88" y="610" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-text-secondary</text>
-<text x="764" y="596" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 12.12:1</text>
-<text x="88" y="644" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#bdbdbd">Labels and hints</text>
-<text x="88" y="666" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-text-muted</text>
-<text x="764" y="652" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 10.05:1</text>
-<text x="88" y="700" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#888888">Searching…</text>
-<text x="88" y="722" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-disabled</text>
-<text x="764" y="708" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 5.33:1</text>
-<rect x="812" y="418" width="16" height="2" fill="#ee4a26"/><text x="812" y="440" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9" letter-spacing="1.5">ACCENT AND STATE</text>
-<rect x="812.5" y="460.5" width="723" height="279" fill="#111111" stroke="#2d2d2d" stroke-width="1"/>
-<text x="1512" y="488" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd" text-anchor="end" letter-spacing="1">CONTRAST ON SURFACE</text>
-<text x="836" y="532" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#ff7a5c">Selected · Playing</text>
-<text x="836" y="554" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-accent-text</text>
-<text x="1512" y="540" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 7.36:1</text>
-<text x="836" y="588" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#ff7660">Couldn’t load your playlists</text>
-<text x="836" y="610" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-error</text>
-<text x="1512" y="596" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 7.20:1</text>
-<text x="836" y="644" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#63d28f">Saved to your crate</text>
-<text x="836" y="666" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-success</text>
-<text x="1512" y="652" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 10.02:1</text>
-<path d="M836 680H980L986 686V708H836Z" fill="#ee4a26"/><text x="911" y="699" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="500" fill="#050505" text-anchor="middle" letter-spacing="0.5">PRIMARY ACTION</text>
-<text x="836" y="722" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--rx-color-on-accent</text>
-<text x="1512" y="708" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="14" font-weight="400" fill="#f5f5f5" text-anchor="end"><tspan fill="#63d28f">✓</tspan> 5.48:1</text>
-<rect x="64" y="794" width="16" height="2" fill="#ee4a26"/><text x="64" y="816" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9" letter-spacing="1.5">LINES AND CONTROLS</text>
-<rect x="64.5" y="836.5" width="1471" height="159" fill="#111111" stroke="#2d2d2d" stroke-width="1"/>
-<rect x="88.5" y="864.5" width="151" height="55" fill="none" stroke="#262626" stroke-width="1"/>
-<text x="88" y="944" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#f5f5f5">--border-subtle</text>
-<text x="88" y="964" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">decorative · 1.25:1</text>
-<rect x="272.5" y="864.5" width="151" height="55" fill="none" stroke="#373737" stroke-width="1"/>
-<text x="272" y="944" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#f5f5f5">--border-default</text>
-<text x="272" y="964" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">decorative · 1.59:1</text>
-<rect x="456.5" y="864.5" width="151" height="55" fill="none" stroke="#707070" stroke-width="1"/>
-<text x="456" y="944" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#f5f5f5">--border-control</text>
-<text x="456" y="964" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">controls · 3.81:1</text>
-<rect x="640.5" y="864.5" width="151" height="55" fill="none" stroke="#a0a0a0" stroke-width="1"/>
-<text x="640" y="944" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#f5f5f5">--border-strong</text>
-<text x="640" y="964" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">hover · 7.22:1</text>
-<path d="M856 870H1082L1092 880V914H856Z" fill="#ee4a26"/>
-<text x="974" y="897" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="500" fill="#050505" text-anchor="middle" letter-spacing="0.8">FIND SIMILAR TRACKS</text>
-<rect x="1112.5" y="870.5" width="171" height="43" fill="none" stroke="#707070" stroke-width="1" rx="2"/>
-<text x="1198" y="897" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f6f6f6" text-anchor="middle" letter-spacing="0.8">LOAD 25 MORE</text>
-<rect x="1304.5" y="870.5" width="131" height="43" fill="none" stroke="#a0a0a0" stroke-width="1" rx="2"/>
-<rect x="1301" y="867" width="138" height="50" fill="none" stroke="#ff8f74" stroke-width="2" rx="4"/>
-<text x="1370" y="897" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f6f6f6" text-anchor="middle" letter-spacing="0.8">FOCUSED</text>
-<text x="856" y="944" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">primary · secondary · keyboard focus</text>
-<rect x="64" y="1022" width="16" height="2" fill="#ee4a26"/><text x="64" y="1044" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9" letter-spacing="1.5">TYPE</text>
-<rect x="64.5" y="1064.5" width="723" height="223" fill="#111111" stroke="#2d2d2d" stroke-width="1"/>
-<text x="88" y="1126" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="300" fill="#f6f6f6">NIGHT SIGNAL</text>
-<text x="764" y="1126" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd" text-anchor="end">font-helvetica · titles, reading</text>
-<text x="88" y="1190" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="20" font-weight="400" fill="#f6f6f6">124 BPM · 8A · 6:42</text>
-<text x="764" y="1190" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd" text-anchor="end">font-fira · labels, buttons, numbers</text>
-<text x="88" y="1254" font-family="Benzin, 'Arial Black', Arial, sans-serif" font-size="30" font-weight="700" fill="#f6f6f6">RESOMIX</text>
-<text x="764" y="1254" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd" text-anchor="end">font-benzin · display, landing site</text>
-<rect x="812" y="1022" width="16" height="2" fill="#ee4a26"/><text x="812" y="1044" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9" letter-spacing="1.5">SPACING</text>
-<rect x="812.5" y="1064.5" width="349" height="223" fill="#111111" stroke="#2d2d2d" stroke-width="1"/>
-<text x="836" y="1101" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-4</text>
-<rect x="912" y="1090" width="12" height="14" fill="#8d8d8d"/>
-<text x="836" y="1125" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-8</text>
-<rect x="912" y="1114" width="24" height="14" fill="#8d8d8d"/>
-<text x="836" y="1149" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-12</text>
-<rect x="912" y="1138" width="36" height="14" fill="#8d8d8d"/>
-<text x="836" y="1173" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-16</text>
-<rect x="912" y="1162" width="48" height="14" fill="#8d8d8d"/>
-<text x="836" y="1197" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-24</text>
-<rect x="912" y="1186" width="72" height="14" fill="#8d8d8d"/>
-<text x="836" y="1221" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-32</text>
-<rect x="912" y="1210" width="96" height="14" fill="#8d8d8d"/>
-<text x="836" y="1245" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-48</text>
-<rect x="912" y="1234" width="144" height="14" fill="#8d8d8d"/>
-<text x="836" y="1269" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">--px-64</text>
-<rect x="912" y="1258" width="192" height="14" fill="#8d8d8d"/>
-<rect x="1186" y="1022" width="16" height="2" fill="#ee4a26"/><text x="1186" y="1044" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9" letter-spacing="1.5">SHAPE</text>
-<rect x="1186.5" y="1064.5" width="349" height="223" fill="#111111" stroke="#2d2d2d" stroke-width="1"/>
-<rect x="1210.5" y="1096.5" width="55" height="55" fill="none" stroke="#707070" stroke-width="1"/>
-<text x="1210" y="1176" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">panel 0</text>
-<rect x="1286.5" y="1096.5" width="55" height="55" fill="none" stroke="#707070" stroke-width="1" rx="2"/>
-<text x="1286" y="1176" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">control 2</text>
-<path d="M1362 1096H1412L1418 1102V1152H1362Z" fill="#ee4a26"/>
-<text x="1362" y="1176" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">notch 6</text>
-<path d="M1438 1096H1484L1494 1106V1152H1438Z" fill="#ee4a26"/>
-<text x="1438" y="1176" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#bdbdbd">notch 10</text>
-<text x="1210" y="1220" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" font-weight="300" fill="#cfcfcf">Square panels. The cut corner marks</text>
-<text x="1210" y="1242" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" font-weight="300" fill="#cfcfcf">the primary action and the selected card.</text>
-<text x="64" y="1312" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#b9b9b9">Generated from tokens/rx.json by scripts/overview.mjs</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1248" viewBox="0 0 1600 1248" role="img" aria-label="Resomix design system v3: Studio and Daylight themes with grounds, text contrast, status, controls and a selected card, plus type, spacing and radius">
+<rect width="1600" height="1248" fill="#101010"/>
+<text x="64" y="100" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="40" font-weight="600" fill="#f2f2f0" letter-spacing="-0.4">Resomix design system</text>
+<text x="64" y="136" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#b9b9b9">v3, calm. One set of names, two themes, every pair checked against WCAG AA.</text>
+<rect x="1321.7" y="78.5" width="213.8" height="31" fill="none" stroke="#2ec4b6" stroke-width="1" rx="999"/>
+<g transform="translate(1335.2 86) scale(0.6666666666666666)" fill="none" stroke="#2ec4b6" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></g>
+<text x="1357.2" y="99" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#2ec4b6">WCAG AA in both themes</text>
+<rect x="64.5" y="180.5" width="723" height="639" fill="#101010" stroke="#34343a" stroke-width="1" rx="14"/>
+<text x="88" y="224" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f2f2f0">Studio</text>
+<text x="764" y="224" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#8e8e96" text-anchor="end">Dark · default for the app</text>
+<rect x="88.5" y="248.5" width="105" height="47" fill="#101010" stroke="#34343a" stroke-width="1" rx="6"/>
+<text x="88" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">canvas</text>
+<text x="88" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">#101010</text>
+<rect x="202.5" y="248.5" width="105" height="47" fill="#17171a" stroke="#34343a" stroke-width="1" rx="6"/>
+<text x="202" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">surface</text>
+<text x="202" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">#17171a</text>
+<rect x="316.5" y="248.5" width="105" height="47" fill="#1f1f23" stroke="#34343a" stroke-width="1" rx="6"/>
+<text x="316" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">raised</text>
+<text x="316" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">#1f1f23</text>
+<rect x="430.5" y="248.5" width="105" height="47" fill="#0b0b0c" stroke="#34343a" stroke-width="1" rx="6"/>
+<text x="430" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">sunken</text>
+<text x="430" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">#0b0b0c</text>
+<rect x="544.5" y="248.5" width="105" height="47" fill="#242428" stroke="#34343a" stroke-width="1" rx="6"/>
+<text x="544" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">overlay</text>
+<text x="544" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">#242428</text>
+<rect x="658.5" y="248.5" width="105" height="47" fill="#351e1c" stroke="#34343a" stroke-width="1" rx="6"/>
+<text x="658" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">selected</text>
+<text x="658" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">#351e1c</text>
+<rect x="88.5" y="352.5" width="675" height="196" fill="#17171a" stroke="#34343a" stroke-width="1" rx="10"/>
+<text x="108" y="392" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f2f2f0">Pick up where you left off</text>
+<text x="744" y="392" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">16.0:1</text>
+<text x="108" y="436" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#b9b9b9">Start from a track you love. We find tracks that sound like it.</text>
+<text x="744" y="436" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">9.1:1</text>
+<text x="108" y="480" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">Opened 2 hours ago</text>
+<text x="744" y="480" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">5.5:1</text>
+<text x="108" y="524" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#ff7a5c">Playing · Late-night techno</text>
+<text x="744" y="524" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">7.0:1</text>
+<rect x="88.5" y="572.5" width="75.4" height="27" fill="none" stroke="#2ec4b6" stroke-width="1" rx="999"/>
+<g transform="translate(98 579) scale(0.5833333333333334)" fill="none" stroke="#2ec4b6" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></g>
+<text x="118" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#2ec4b6">Keep</text>
+<rect x="172.9" y="572.5" width="83" height="27" fill="none" stroke="#f5b94a" stroke-width="1" rx="999"/>
+<g transform="translate(182.4 579) scale(0.5833333333333334)" fill="none" stroke="#f5b94a" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7v5l3 2"/></g>
+<text x="202.4" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#f5b94a">Maybe</text>
+<rect x="264.9" y="572.5" width="113.39999999999999" height="27" fill="none" stroke="#7ab0ff" stroke-width="1" rx="999"/>
+<g transform="translate(274.4 579) scale(0.5833333333333334)" fill="none" stroke="#7ab0ff" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11v6M12 7.5v.5"/></g>
+<text x="294.4" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#7ab0ff">Analysing</text>
+<rect x="387.29999999999995" y="572.5" width="90.6" height="27" fill="none" stroke="#ff6e6e" stroke-width="1" rx="999"/>
+<g transform="translate(396.79999999999995 579) scale(0.5833333333333334)" fill="none" stroke="#ff6e6e" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7v6M12 16v.5"/></g>
+<text x="416.79999999999995" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#ff6e6e">Failed</text>
+<rect x="486.9" y="572.5" width="63" height="27" fill="none" stroke="#6e6e76" stroke-width="1" rx="999"/>
+<text x="518.4" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#b9b9b9" text-anchor="middle">Pass</text>
+<rect x="88" y="624" width="196" height="48" fill="#ee4a26" rx="6"/>
+<text x="186" y="654" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#101010" text-anchor="middle">Find similar tracks</text>
+<rect x="300.5" y="628.5" width="143" height="39" fill="none" stroke="#6e6e76" stroke-width="1" rx="6"/>
+<text x="372" y="653" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="500" fill="#f2f2f0" text-anchor="middle">Save to crate</text>
+<rect x="464.5" y="628.5" width="127" height="39" fill="none" stroke="#a3a3aa" stroke-width="1" rx="6"/>
+<rect x="461" y="625" width="134" height="46" fill="none" stroke="#ff8f74" stroke-width="2" rx="9"/>
+<text x="528" y="653" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="500" fill="#f2f2f0" text-anchor="middle">Focused</text>
+<rect x="89" y="697" width="674" height="94" fill="#351e1c" stroke="#ee4a26" stroke-width="2" rx="10"/>
+<text x="108" y="732" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f2f2f0">Sound alike</text>
+<text x="108" y="758" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#b9b9b9">Tracks that sound like your reference.</text>
+<g transform="translate(674 719) scale(0.6666666666666666)" fill="none" stroke="#ff7a5c" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></g>
+<text x="744" y="732" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#ff7a5c" text-anchor="end">Selected</text>
+<rect x="812.5" y="180.5" width="723" height="639" fill="#f6f6f4" stroke="#d3d3d0" stroke-width="1" rx="14"/>
+<text x="836" y="224" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#141414">Daylight</text>
+<text x="1512" y="224" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#65656b" text-anchor="end">Light · marketing, documents, print</text>
+<rect x="836.5" y="248.5" width="105" height="47" fill="#f6f6f4" stroke="#d3d3d0" stroke-width="1" rx="6"/>
+<text x="836" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#65656b">canvas</text>
+<text x="836" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b">#f6f6f4</text>
+<rect x="950.5" y="248.5" width="105" height="47" fill="#ffffff" stroke="#d3d3d0" stroke-width="1" rx="6"/>
+<text x="950" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#65656b">surface</text>
+<text x="950" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b">#ffffff</text>
+<rect x="1064.5" y="248.5" width="105" height="47" fill="#f0f0ee" stroke="#d3d3d0" stroke-width="1" rx="6"/>
+<text x="1064" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#65656b">raised</text>
+<text x="1064" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b">#f0f0ee</text>
+<rect x="1178.5" y="248.5" width="105" height="47" fill="#ebebe8" stroke="#d3d3d0" stroke-width="1" rx="6"/>
+<text x="1178" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#65656b">sunken</text>
+<text x="1178" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b">#ebebe8</text>
+<rect x="1292.5" y="248.5" width="105" height="47" fill="#ffffff" stroke="#d3d3d0" stroke-width="1" rx="6"/>
+<text x="1292" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#65656b">overlay</text>
+<text x="1292" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b">#ffffff</text>
+<rect x="1406.5" y="248.5" width="105" height="47" fill="#fdede9" stroke="#d3d3d0" stroke-width="1" rx="6"/>
+<text x="1406" y="314" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#65656b">selected</text>
+<text x="1406" y="330" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b">#fdede9</text>
+<rect x="836.5" y="352.5" width="675" height="196" fill="#ffffff" stroke="#d3d3d0" stroke-width="1" rx="10"/>
+<text x="856" y="392" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#141414">Pick up where you left off</text>
+<text x="1492" y="392" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b" text-anchor="end">18.4:1</text>
+<text x="856" y="436" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#45454a">Start from a track you love. We find tracks that sound like it.</text>
+<text x="1492" y="436" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b" text-anchor="end">9.5:1</text>
+<text x="856" y="480" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#65656b">Opened 2 hours ago</text>
+<text x="1492" y="480" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b" text-anchor="end">5.8:1</text>
+<text x="856" y="524" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#b8361a">Playing · Late-night techno</text>
+<text x="1492" y="524" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#65656b" text-anchor="end">5.9:1</text>
+<rect x="836.5" y="572.5" width="75.4" height="27" fill="none" stroke="#0b6f7a" stroke-width="1" rx="999"/>
+<g transform="translate(846 579) scale(0.5833333333333334)" fill="none" stroke="#0b6f7a" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></g>
+<text x="866" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#0b6f7a">Keep</text>
+<rect x="920.9" y="572.5" width="83" height="27" fill="none" stroke="#8a5a00" stroke-width="1" rx="999"/>
+<g transform="translate(930.4 579) scale(0.5833333333333334)" fill="none" stroke="#8a5a00" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7v5l3 2"/></g>
+<text x="950.4" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#8a5a00">Maybe</text>
+<rect x="1012.9" y="572.5" width="113.39999999999999" height="27" fill="none" stroke="#2c63c9" stroke-width="1" rx="999"/>
+<g transform="translate(1022.4 579) scale(0.5833333333333334)" fill="none" stroke="#2c63c9" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11v6M12 7.5v.5"/></g>
+<text x="1042.4" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#2c63c9">Analysing</text>
+<rect x="1135.3" y="572.5" width="90.6" height="27" fill="none" stroke="#c42b2b" stroke-width="1" rx="999"/>
+<g transform="translate(1144.8 579) scale(0.5833333333333334)" fill="none" stroke="#c42b2b" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7v6M12 16v.5"/></g>
+<text x="1164.8" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#c42b2b">Failed</text>
+<rect x="1234.8999999999999" y="572.5" width="63" height="27" fill="none" stroke="#85858c" stroke-width="1" rx="999"/>
+<text x="1266.3999999999999" y="591" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#45454a" text-anchor="middle">Pass</text>
+<rect x="836" y="624" width="196" height="48" fill="#ee4a26" rx="6"/>
+<text x="934" y="654" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#101010" text-anchor="middle">Find similar tracks</text>
+<rect x="1048.5" y="628.5" width="143" height="39" fill="none" stroke="#85858c" stroke-width="1" rx="6"/>
+<text x="1120" y="653" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="500" fill="#141414" text-anchor="middle">Save to crate</text>
+<rect x="1212.5" y="628.5" width="127" height="39" fill="none" stroke="#5e5e64" stroke-width="1" rx="6"/>
+<rect x="1209" y="625" width="134" height="46" fill="none" stroke="#c2391a" stroke-width="2" rx="9"/>
+<text x="1276" y="653" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="500" fill="#141414" text-anchor="middle">Focused</text>
+<rect x="837" y="697" width="674" height="94" fill="#fdede9" stroke="#ee4a26" stroke-width="2" rx="10"/>
+<text x="856" y="732" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#141414">Sound alike</text>
+<text x="856" y="758" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#45454a">Tracks that sound like your reference.</text>
+<g transform="translate(1422 719) scale(0.6666666666666666)" fill="none" stroke="#b8361a" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></g>
+<text x="1492" y="732" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#b8361a" text-anchor="end">Selected</text>
+<text x="64" y="868" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#b9b9b9">Type</text>
+<rect x="64.5" y="884.5" width="473.6666666666667" height="299" fill="#17171a" stroke="#34343a" stroke-width="1" rx="10"/>
+<text x="84" y="940" font-family="Benzin, 'Arial Black', Arial, sans-serif" font-size="36" font-weight="700" fill="#f2f2f0">Built for diggers</text>
+<text x="518.6666666666667" y="940" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">display-lg</text>
+<text x="84" y="980" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#f2f2f0">Good evening, Alex</text>
+<text x="518.6666666666667" y="980" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">page-title</text>
+<text x="84" y="1012" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f2f2f0">Pick up where you left off</text>
+<text x="518.6666666666667" y="1012" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">section-title</text>
+<text x="84" y="1040" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f2f2f0">Late-night techno</text>
+<text x="518.6666666666667" y="1040" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">card-title</text>
+<text x="84" y="1067" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#f2f2f0">Start from a track you love.</text>
+<text x="518.6666666666667" y="1067" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">body</text>
+<text x="84" y="1092" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#f2f2f0">Reference track</text>
+<text x="518.6666666666667" y="1092" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">label</text>
+<text x="84" y="1116" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#f2f2f0">Opened 2 hours ago</text>
+<text x="518.6666666666667" y="1116" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">caption</text>
+<text x="84" y="1141" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="13" font-weight="400" fill="#f2f2f0">124 BPM · 8A · 6:42</text>
+<text x="518.6666666666667" y="1141" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">data</text>
+<text x="562.6666666666667" y="868" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#b9b9b9">Spacing · 4px base</text>
+<rect x="563.1666666666667" y="884.5" width="473.6666666666667" height="299" fill="#17171a" stroke="#34343a" stroke-width="1" rx="10"/>
+<text x="582.6666666666667" y="924" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-1</text>
+<rect x="672.6666666666667" y="913" width="12" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="924" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">4px</text>
+<text x="582.6666666666667" y="950" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-2</text>
+<rect x="672.6666666666667" y="939" width="24" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="950" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">8px</text>
+<text x="582.6666666666667" y="976" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-3</text>
+<rect x="672.6666666666667" y="965" width="36" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="976" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">12px</text>
+<text x="582.6666666666667" y="1002" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-4</text>
+<rect x="672.6666666666667" y="991" width="48" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="1002" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">16px</text>
+<text x="582.6666666666667" y="1028" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-5</text>
+<rect x="672.6666666666667" y="1017" width="60" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="1028" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">20px</text>
+<text x="582.6666666666667" y="1054" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-6</text>
+<rect x="672.6666666666667" y="1043" width="72" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="1054" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">24px</text>
+<text x="582.6666666666667" y="1080" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-8</text>
+<rect x="672.6666666666667" y="1069" width="96" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="1080" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">32px</text>
+<text x="582.6666666666667" y="1106" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-10</text>
+<rect x="672.6666666666667" y="1095" width="120" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="1106" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">40px</text>
+<text x="582.6666666666667" y="1132" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-14</text>
+<rect x="672.6666666666667" y="1121" width="168" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="1132" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">56px</text>
+<text x="582.6666666666667" y="1158" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">space-18</text>
+<rect x="672.6666666666667" y="1147" width="216" height="14" fill="#b9b9b9" rx="2"/>
+<text x="1017.3333333333335" y="1158" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96" text-anchor="end">72px</text>
+<text x="1061.3333333333335" y="868" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#b9b9b9">Radius</text>
+<rect x="1061.8333333333335" y="884.5" width="473.6666666666667" height="299" fill="#17171a" stroke="#34343a" stroke-width="1" rx="10"/>
+<rect x="1081.8333333333335" y="912.5" width="79" height="63" fill="#1f1f23" stroke="#6e6e76" stroke-width="1" rx="4"/>
+<text x="1081.3333333333335" y="1000" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f2f2f0">xs</text>
+<text x="1081.3333333333335" y="1018" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">4px</text>
+<rect x="1226.7222222222224" y="912.5" width="79" height="63" fill="#1f1f23" stroke="#6e6e76" stroke-width="1" rx="6"/>
+<text x="1226.2222222222224" y="1000" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f2f2f0">sm</text>
+<text x="1226.2222222222224" y="1018" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">6px</text>
+<rect x="1371.6111111111113" y="912.5" width="79" height="63" fill="#1f1f23" stroke="#6e6e76" stroke-width="1" rx="10"/>
+<text x="1371.1111111111113" y="1000" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f2f2f0">md</text>
+<text x="1371.1111111111113" y="1018" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">10px</text>
+<rect x="1081.8333333333335" y="1040.5" width="79" height="63" fill="#1f1f23" stroke="#6e6e76" stroke-width="1" rx="14"/>
+<text x="1081.3333333333335" y="1128" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f2f2f0">lg</text>
+<text x="1081.3333333333335" y="1146" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">14px</text>
+<rect x="1226.7222222222224" y="1040.5" width="79" height="63" fill="#1f1f23" stroke="#6e6e76" stroke-width="1" rx="20"/>
+<text x="1226.2222222222224" y="1128" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f2f2f0">xl</text>
+<text x="1226.2222222222224" y="1146" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">20px</text>
+<rect x="1371.6111111111113" y="1040.5" width="79" height="31" fill="#1f1f23" stroke="#6e6e76" stroke-width="1" rx="32"/>
+<text x="1371.1111111111113" y="1128" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f2f2f0">pill</text>
+<text x="1371.1111111111113" y="1146" font-family="'Fira Code', ui-monospace, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#8e8e96">999px</text>
+<text x="64" y="1218" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#8e8e96">Generated from tokens/v3/tokens.json by scripts/overview.mjs</text>
 </svg>
