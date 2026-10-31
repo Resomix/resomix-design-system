@@ -1,398 +1,330 @@
 # Resomix design system
 
-The fonts, colours, spacing, patterns and components of the live Resomix app, as shown on [`/lab/design`](https://staging-frontend.resomix.com/lab/design), plus the tokens, icons and contrast check that keep them consistent.
+**v3, calm.** Calm, clear, and built around one loop: start from a track, decide, save, and keep going. One system for the app (Home, Discover, Sessions, Library, Track Intelligence), the beta and the marketing site, in two themes from one set of names.
 
-> The screenshots and values below were taken from staging on 2026-10-31. Four colours have since been fixed for contrast in [`tokens/rx.json`](tokens/rx.json); they are marked **fixed** in the tables. See [the contrast audit](docs/contrast-audit.md).
+![Resomix design system v3: Studio and Daylight themes, text contrast, status, controls, type, spacing and radius](docs/overview.svg)
 
-![The whole /lab/design page](docs/lab-design/full-page.png)
+v3 replaces the brutal look the app runs today. The app before v3 is documented section by section in [docs/lab-design](docs/lab-design/README.md), and [the migration guide](docs/migration-v3.md) lists what moves where.
 
-<details>
-<summary>The brand itself (logo, safe space and brand palette) lives in the brand guidelines. This page is the current product UI.</summary>
+## Contents
 
-See also [the v3 "calm" direction](docs/guidelines-v3.md) and its [tokens](tokens/v3/tokens.json).
-</details>
+1. [Use it](#use-it)
+2. [Principles](#principles)
+3. [Tokens](#tokens)
+4. [Colour](#colour)
+5. [Type](#type-1)
+6. [Space, shape and depth](#space-shape-and-depth)
+7. [States](#states)
+8. [Writing](#writing)
+9. [Accessibility](#accessibility)
+10. [Icons and logo](#icons-and-logo)
+11. [The product frame](#the-product-frame)
+12. [Brand layer](#brand-layer-the-universe-used-sparingly)
+13. [Moving the app to v3](#moving-the-app-to-v3)
+14. [Tooling](#tooling)
 
-## On this page
+## Use it
 
-1. [Colours](#colours)
-2. [Type](#type)
-3. [Spacing and layout](#spacing-and-layout)
-4. [Surfaces, lines and marks](#surfaces-lines-and-marks)
-5. [Buttons and fields](#buttons-and-fields)
-6. [Sonic Discovery](#sonic-discovery)
-7. [Feedback](#feedback)
-8. [States](#states)
-9. [Motion](#motion)
-10. [Icons](#icons)
-11. [Where it lives](#where-it-lives)
-12. [Tokens, contrast and tooling](#tokens-contrast-and-tooling)
+```css
+@import "@resomix/design-system/resomix.css";  /* v3 tokens, both themes, type styles, aliases for today's names */
+@import "@resomix/design-system/pixels.css";   /* the --px-N size steps */
+```
 
----
+- **Studio** (dark) is the default. **Daylight** applies under `.light` or `[data-theme="light"]`.
+- New code uses the v3 names: `var(--bg-surface)`, `var(--text-secondary)`, `var(--space-5)`, `var(--radius-md)`.
+- Type styles are classes: `.type-page-title`, `.type-body`, `.type-data`, and the rest in [Type](#type-1).
+- The names the app uses today (`--rx-*`, `--color-*`, `--playlist-*`) still work and resolve to v3. See [the token map](docs/migration-v3.md#token-map).
 
-![Lab, design system: introduction, examples in use and the section index](docs/lab-design/00-intro.png)
+## Principles
 
-See them in use: **Sonic Discovery**, **Track Intelligence**, **Library**.
+1. **Decisions before data.** Every view answers "what should I do next?" above the fold, with at most three choices and one primary action. Data supports a decision; it is never decoration.
+2. **One loop, no dead ends.** Reference → Listen → Decide → Save → Continue. Every finished state offers the next round ("Continue digging" from kept tracks). Show progress with `LoopTracker`.
+3. **Keep my place.** Work opens in `WorkbenchTabs`: previews don't pile up, kept tabs come back, closing a tab returns to where the user was. Filters, open sections and the playing track are saved per tab.
+4. **Calm by default.** Neutral surfaces, one accent, quiet borders, generous space. Nothing blinks, nothing is uppercase, nothing competes with the primary action.
+5. **Show depth on request.** Summary first, details behind `Disclosure`, `Drawer` or a tab. Technical values exist, but only for those who open them.
+6. **Accessible is the baseline.** WCAG 2.2 AA in both themes, colour never the only signal, every action reachable by keyboard.
+7. **Only what's live.** Never design a number, feature or claim the product doesn't have. Missing data shows "—".
 
-## Colours
+## Tokens
 
-![Colours section](docs/lab-design/01-colours.png)
+All values, generated from [`tokens/v3/tokens.json`](tokens/v3/tokens.json). Every text, edge and status pair is checked for contrast in both themes on every push.
 
-A near-black canvas, white text at three strengths, hairline borders and one accent, neon orange. The accent marks the primary action, what is selected and what is playing, and nothing else.
+<!-- generated:tokens -->
+### Colour
 
-### Brand palette
+**Grounds**
 
-From the brand guidelines, with the token that carries each colour in the app.
-
-| Colour | Value | Token in the app |
-|---|---|---|
-| White | `#FFFFFF` | `--color-primary` |
-| Light gray | `#B9B9B9` | `--color-primary-hover` |
-| Neon orange | `#EE4A26` | `--rx-color-accent` |
-| Space black | `#101010` | closest is `--rx-color-surface` |
-
-### Surfaces
-
-| Token | Value | Use |
-|---|---|---|
-| `--rx-color-canvas` | `#050505` | The page behind everything |
-| `--rx-color-surface` | `#111` | Panels, cards and rows |
-| `--rx-color-surface-raised` | `#171717` | A surface on top of a surface |
-| `--rx-color-overlay` | `#ffffff0a` | A light wash over a surface |
-
-### Text
-
-| Token | Value | Use |
-|---|---|---|
-| `--rx-color-text-primary` | `#fffffff5` | Titles and main text |
-| `--rx-color-text-secondary` | `#fffc` | Supporting text |
-| `--rx-color-text-muted` | `#ffffffb8` | Labels and hints |
-| `--rx-color-disabled` | `#ffffff6b` → **fixed** `#ffffff80` | Controls that cannot be used |
-
-### Lines
-
-| Token | Value | Use |
-|---|---|---|
-| `--rx-color-border-subtle` | `#ffffff17` | Lines inside a panel (decorative) |
-| `--rx-color-border-default` | `#ffffff29` | Panel borders (decorative) |
-| `--rx-color-border-control` | **new** `#ffffff66` | Borders of controls: inputs, secondary buttons (3:1) |
-| `--rx-color-border-strong` | `#ffffff3d` → **fixed** `#ffffff99` | Hover, and a paused row's marker |
-| `--playlist-divider` | `#ffffff17` | Lines between result rows |
-| `--playlist-divider-strong` | `#ffffff24` | The results header line |
-
-### Accent and state
-
-| Token | Value | Use |
-|---|---|---|
-| `--rx-color-accent` | `#ee4a26` | Primary action, selected, playing |
-| `--rx-color-accent-hover` | `#f46545` | The accent under the pointer |
-| `--rx-color-accent-text` | **new** `#ff7a5c` | Small orange text (Selected tag, rank, separators) |
-| `--rx-color-accent-soft` | `#ee4a2624` | Tint behind accent text |
-| `--rx-color-on-accent` | **new** `#050505` | Text on accent fills |
-| `--rx-color-focus` | `#ff8f74` | Keyboard focus ring |
-| `--rx-color-selected` | `#ee4a260f` | A selected card's fill |
-| `--rx-color-playing` | `#ee4a2633` | A playing track's tint |
-| `--rx-color-score-fill` | `#ffffff85` | A neutral score bar |
-| `--rx-color-error` | `#ff7660` | Errors and destructive actions |
-| `--rx-color-success` | `#63d28f` | Success |
-
-### Theme tokens
-
-The older tokens many screens still use. These are the ones the light theme swaps.
-
-| Token | Dark | Light theme | Use |
+| Token | Studio | Daylight | Use |
 |---|---|---|---|
-| `--color-primary` | `#fff` | `#000` | Main foreground |
-| `--color-secondary` | `#000` | `#fff` | Main background |
-| `--color-primary-background` | `#000` | `#000` → **fixed** `#f6f6f4` | Page background |
-| `--color-secondary-background` | `#111` | `#111` → **fixed** `#f0f0ee` | Raised background |
-| `--color-primary-hover` | `#b9b9b9` | `#b9b9b9` | Foreground under the pointer |
-| `--color-text-primary` | `#000` | `#fff` | Text on the foreground colour |
-| `--color-text-secondary` | `#fff` | `#000` | Text on the background colour |
-| `--color-neon-orange` | `#ee4a26` | `#ee4a26` | The accent, older name |
+| `--bg-canvas` | `#101010` | `#f6f6f4` | Page background behind everything. App shell main area and marketing pages. |
+| `--bg-surface` | `#17171a` | `#ffffff` | Cards, panels, table rows, sidebar, open workbench tab. The default ground for content. |
+| `--bg-raised` | `#1f1f23` | `#f0f0ee` | A block inside a surface: a selected segment, a nested group, artwork placeholders. |
+| `--bg-sunken` | `#0b0b0c` | `#ebebe8` | Inputs, the command bar, tab strip, segmented-control track. |
+| `--bg-overlay` | `#242428` | `#ffffff` | Drawers, dialogs, menus, toasts. Always with shadow-overlay. |
+| `--bg-hover` | `#232327` | `#ebebe9` | Hover fill for rows, ghost buttons, menu items and tabs. |
+| `--bg-selected` | `#351e1c` | `#fdede9` | Fill for a selected choice card, the playing row and the current tab marker area. Pair with a border or icon, never on its own. |
+| `--bg-scrim` | `rgba(0, 0, 0, 0.6)` | `rgba(16, 16, 16, 0.4)` | Behind dialogs and the mobile drawer. |
+
+**Text**
+
+| Token | Studio | Daylight | Use |
+|---|---|---|---|
+| `--text-primary` | `#f2f2f0` | `#141414` | Titles, body copy, values. Reads on every bg- token. |
+| `--text-secondary` | `#b9b9b9` | `#45454a` | Supporting copy, artist names, descriptions. Reads on every bg- token. |
+| `--text-muted` | `#8e8e96` | `#65656b` | Hints, timestamps, captions, placeholder-like meta. Reads on every bg- token. |
+| `--text-disabled` | `#5f5f66` | `#a3a3a8` | Disabled labels only (exempt from contrast). Always paired with a disabled cursor or a reason. |
+| `--text-accent` | `#ff7a5c` | `#b8361a` | Small orange text: the active nav label, inline links in product copy. Reads on every bg- token. |
+| `--text-on-accent` | `#101010` | `#101010` | Text and icons on accent and accent-hover fills (5.5:1 and 6.2:1). |
+
+**Edges**
+
+| Token | Studio | Daylight | Use |
+|---|---|---|---|
+| `--border-subtle` | `#26262b` | `#e6e6e3` | Dividers between rows inside one card. Decorative only. |
+| `--border-default` | `#34343a` | `#d3d3d0` | Card and panel edges, section dividers. Decorative: the content inside identifies the card. |
+| `--border-control` | `#6e6e76` | `#85858c` | Edges of things you can operate: inputs, secondary buttons, switches, choice cards, checkboxes. 3:1 or more on every bg- token. |
+| `--border-strong` | `#a3a3aa` | `#5e5e64` | Hover edge of a control or card. |
+
+**Accent and focus**
+
+| Token | Studio | Daylight | Use |
+|---|---|---|---|
+| `--accent` | `#ee4a26` | `#ee4a26` | The one primary action per view, the selected choice edge, the playing indicator, the current loop step. Nothing else. |
+| `--accent-hover` | `#ff5c38` | `#ff5c38` | Hover fill of the primary button. The change is a lighter fill plus the pointer; never the only signal of state. |
+| `--focus` | `#ff8f74` | `#c2391a` | Focus ring: 2px solid, 2px offset, on every focusable element. 3:1 or more on every bg- token in both themes. |
+
+**Status**
+
+| Token | Studio | Daylight | Use |
+|---|---|---|---|
+| `--status-success` | `#2ec4b6` | `#0b6f7a` | Keep, Ready, Saved. Teal, off the red-green axis, always with a check icon and a word. |
+| `--status-warning` | `#f5b94a` | `#8a5a00` | Maybe, Queued, limits close. Always with a clock icon and a word. |
+| `--status-danger` | `#ff6e6e` | `#c42b2b` | Failed, errors, destructive actions. Always with an alert icon and a word. Never used for Pass. |
+| `--status-info` | `#7ab0ff` | `#2c63c9` | Analysing, processing, neutral notices. Always with a word. |
+
+**Data and tools**
+
+| Token | Studio | Daylight | Use |
+|---|---|---|---|
+| `--tool-ink` | `#101010` | `#ffffff` | Glyph colour inside a tool icon tile (data-1 to data-5 fills). Brand black on Studio, white on Daylight; 4.5:1 or more on every data colour in its theme. |
+| `--data-1` | `#ff8c42` | `#b84e0c` | Series 1: energy, the reference track in comparisons. Chart marks only (3:1 or more on bg-surface); label values with text- tokens, never in this colour. |
+| `--data-2` | `#6f9bff` | `#2f5fc4` | Series 2: the candidate track, tempo. Chart marks only (3:1 or more on bg-surface); label values with text- tokens, never in this colour. |
+| `--data-3` | `#4fd1e0` | `#0e7c8a` | Series 3: key, harmonic content. Chart marks only (3:1 or more on bg-surface); label values with text- tokens, never in this colour. |
+| `--data-4` | `#b48cff` | `#7a4fd1` | Series 4: mood or texture. Chart marks only (3:1 or more on bg-surface); label values with text- tokens, never in this colour. |
+| `--data-5` | `#f5c451` | `#7a5e00` | Series 5: everything else. Chart marks only (3:1 or more on bg-surface); label values with text- tokens, never in this colour. |
+
+**Brand**
+
+| Token | Studio | Daylight | Use |
+|---|---|---|---|
+| `--brand-orange` | `#ee4a26` | `#ee4a26` | Neon orange from the brand guidelines. The source for accent. Fills and large marks only; small orange text uses text-accent. |
+| `--brand-black` | `#101010` | `#101010` | Space black from the brand guidelines. The Studio canvas, logo ink on light grounds, text on accent fills. |
+| `--brand-gray` | `#b9b9b9` | `#b9b9b9` | Light gray from the brand guidelines. Studio text-secondary. |
+| `--brand-white` | `#ffffff` | `#ffffff` | White from the brand guidelines. Logo ink on dark grounds, Daylight surface. |
+
+### Type
+
+| Family | Stack |
+|---|---|
+| `--font-sans` | `"Helvetica_Neue", "Helvetica Neue", Helvetica, Arial, sans-serif` |
+| `--font-mono` | `"Fira Code", ui-monospace, Menlo, Consolas, monospace` |
+| `--font-display` | `Benzin, "Helvetica_Neue", "Helvetica Neue", Helvetica, Arial, sans-serif` |
+
+| Class | Family | Size / line | Weight | Use |
+|---|---|---|---|---|
+| `.type-page-title` | sans | 28px / 34px | 600 | One per view: the page or tab title. |
+| `.type-section-title` | sans | 20px / 28px | 600 | Section headings inside a view. |
+| `.type-card-title` | sans | 16px / 22px | 600 | Card, drawer and dialog titles; track titles in rows. |
+| `.type-body` | sans | 15px / 22px | 400 | Default reading text. |
+| `.type-body-sm` | sans | 13px / 18px | 400 | Secondary lines, artist names, descriptions in dense lists. |
+| `.type-label` | sans | 13px / 16px | 500 | Field labels, button text in small buttons, tab labels. |
+| `.type-caption` | sans | 12px / 16px | 400 | The smallest text in the product. Timestamps and hints. Nothing smaller. |
+| `.type-data-lg` | mono | 24px / 28px | 500 | The number in a stat tile. |
+| `.type-data` | mono | 13px / 18px | 400 | BPM, key, duration, match score in rows. Numbers only, sentence case units. |
+| `.type-data-sm` | mono | 12px / 16px | 400 | Keyboard hints and file sizes. |
+| `.type-display-xl` | display | 72px / 72px | 700 | Landing hero headline only, one per page. Benzin. |
+| `.type-display-lg` | display | 48px / 52px | 700 | Closing banner or one feature headline per page. Benzin. |
+| `.type-marketing-h2` | sans | 32px / 38px | 600 | Section headings on landing pages, in sentence case. |
+| `.type-lead` | sans | 18px / 28px | 400 | The paragraph under a hero or section heading. Max 2 lines. |
+
+### Spacing
+
+| Token | Value | Use |
+|---|---|---|
+| `--space-1` | `4px` | Icon to label gap inside small controls. |
+| `--space-2` | `8px` | Gap between related controls; icon to text in buttons. |
+| `--space-3` | `12px` | Inner padding of small cards, row cell gaps. |
+| `--space-4` | `16px` | Card padding on mobile, gap between cards in a grid. |
+| `--space-5` | `20px` | Card padding on desktop. |
+| `--space-6` | `24px` | Gap between groups inside a view. |
+| `--space-8` | `32px` | Gap between sections in a view; page side padding on desktop. |
+| `--space-10` | `40px` | Top padding of a view under the tab strip. |
+| `--space-14` | `56px` | Gap between landing page sections on mobile. |
+| `--space-18` | `72px` | Gap between landing page sections on desktop. |
+
+### Radius
+
+| Token | Value | Use |
+|---|---|---|
+| `--radius-xs` | `4px` | Keyboard hints, small tags, checkbox. |
+| `--radius-sm` | `6px` | Buttons, inputs, tabs, segmented control items, artwork thumbnails in rows. |
+| `--radius-md` | `10px` | Cards, choice cards, menus, the command bar, toasts. |
+| `--radius-lg` | `14px` | Drawers, dialogs, large panels. |
+| `--radius-xl` | `20px` | Marketing tiles and product frames (the brand's rounded-square tile). |
+| `--radius-pill` | `999px` | Status pills and switch tracks only. |
+
+### Depth
+
+| Token | Studio | Daylight | Use |
+|---|---|---|---|
+| `--shadow-overlay` | `0 16px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px #34343a` | `0 12px 32px rgba(16, 16, 16, 0.14), 0 0 0 1px #d3d3d0` | Drawers, dialogs, menus, toasts, the open command bar. Nothing on the page itself has a shadow. |
+| `--shadow-lift` | `0 2px 6px rgba(0, 0, 0, 0.4)` | `0 1px 3px rgba(16, 16, 16, 0.12)` | The selected item in a segmented control and a dragged row. |
+
+### Sizes
+
+| Token | Value | Use |
+|---|---|---|
+| `--control-sm` | `32px` | Small buttons, row actions, triage buttons in dense lists. |
+| `--control-md` | `40px` | Default height of buttons, inputs, tabs. |
+| `--control-lg` | `48px` | The primary action of a view and the main search field. |
+| `--target-min` | `24px` | Smallest pointer target (WCAG 2.2 2.5.8). Icon buttons pad up to it. |
+| `--sidebar-width` | `240px` | App sidebar, expanded. Collapsed: 64px. |
+| `--drawer-width` | `420px` | Track and crate drawers on desktop. Full width under 720px. |
+| `--content-max` | `1200px` | Max width of view content and landing sections. |
+| `--reading-max` | `680px` | Max width of paragraphs. |
+
+### Motion
+
+| Token | Value | Use |
+|---|---|---|
+| `--duration-fast` | `120ms` | Hover, press, colour changes. |
+| `--duration-base` | `200ms` | Tabs, segmented control, disclosure open. |
+| `--duration-slow` | `320ms` | Drawers and dialogs entering. |
+| `--ease-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Every transition. With prefers-reduced-motion, durations go to 0. |
+<!-- /generated:tokens -->
+
+## Colour
+
+Two themes from one set of names: **Studio** (dark, default for the app) and **Daylight** (light, default for marketing body sections, documents and print). Components only use semantic tokens.
+
+- **Grounds.** `bg-canvas` for the page, `bg-surface` for cards, rows and the sidebar, `bg-raised` for a block inside a card, `bg-sunken` for inputs and the tab strip, `bg-overlay` for anything floating. Hover is `bg-hover`. Never stack a ground on itself; step up or down one.
+- **Text.** `text-primary` for titles and values, `text-secondary` for supporting copy, `text-muted` for meta and hints. All three read at 4.5:1 or more on every `bg-` token in both themes. Small orange text is `text-accent`, never `accent`.
+- **Edges.** `border-default` around cards (decorative), `border-subtle` between rows, `border-control` around anything you can operate (3:1), `border-strong` on hover.
+- **Accent** (`accent`, the brand's neon orange `#EE4A26`) means exactly four things: the one primary action, the selected choice, what's playing, the current loop step. Text on it is `text-on-accent` (brand black). If two orange things compete in one view, one of them is wrong.
+- **Status.** `status-success` (Keep, Ready: teal), `status-warning` (Maybe, Queued: amber), `status-danger` (errors, destructive: red), `status-info` (Analysing: blue). Always paired with an icon and a word. Success is teal, not green, so it can't be confused with red. Pass is neutral, not red: it's a choice, not an error.
+- **Data.** `data-1` to `data-5` for chart marks only (3:1 or more), labelled in `text-` colours. Match bars use `text-secondary`, never a status colour.
+- **Tool identity.** Sonic Discovery `data-3`, Track Intelligence `data-2`, Crate Sessions `data-5`, Library and catalogues `data-4`, Bulk tagging `data-1`, glyphs in `tool-ink`. The same tile in the site sidebar, the app sidebar and tool cards. Tool colours never replace `accent`.
+- **Brand primitives** `brand-orange`, `brand-black`, `brand-gray`, `brand-white` are the guideline colours, for the logo and marketing art, not components.
 
 ## Type
 
-![Type section](docs/lab-design/02-type.png)
+- **Helvetica Neue** (`--font-sans`) for everything people read: `page-title`, `section-title`, `card-title`, `body`, `body-sm`, `label`, `caption`. Sentence case everywhere. Nothing below 12px.
+- **Fira Code** (`--font-mono`) only for numbers people compare: BPM, key, duration, match score, counts in stat tiles, keyboard hints (`data-lg`, `data`, `data-sm`). Never for labels, buttons or headings, and never uppercase.
+- **Benzin** (`--font-display`) only for marketing headlines: `display-xl` in a hero, `display-lg` once more per page at most. Never inside the app.
+- Marketing section headings use `marketing-h2` with a `lead` paragraph. Paragraphs stop at `reading-max` (680px).
 
-Helvetica Neue for words people read, Fira Code for labels, buttons and numbers. Most text is light weight, and labels are uppercase with wide spacing.
+## Space, shape and depth
 
-### Families
-
-| Family | Weights | Class | Use |
-|---|---|---|---|
-| Helvetica Neue | 300, 400, 500, 700 | `.font-helvetica` | Titles, track names and text people read. Mostly light (300), with medium (500) and bold (700) for emphasis. |
-| Fira Code | 300, 400, 500, 600 | `.font-fira` | Labels, buttons, numbers and metadata, usually uppercase with wide letter spacing. |
-| Benzin Bold | 700 | `.font-benzin` | Big display words, mostly on the landing site. |
-
-### Styles in use
-
-| Sample | Style | Defined as |
-|---|---|---|
-| FIND SIMILAR TRACKS | Page title | `font-helvetica` 32 light uppercase |
-| SIMILAR TRACKS FOR THIS REFERENCE | Section kicker | `PAGE_KICKER` |
-| THIS MONTH'S USAGE | Sub-label | `PAGE_SUBLABEL` |
-| ANALYSE A TRACK | Card title | TaskCard title, `font-helvetica` 16 bold uppercase |
-| One reference track goes in, and a ranked shortlist of tracks that sound like it comes out. | Body | `font-helvetica` 15 light, text secondary |
-| NIGHT SIGNAL (EXTENDED MIX) / Sample artist | Track title and artist | PlaylistTable, 14 light uppercase over 13 light |
-| Warm-up / 24 tracks · updated today | Row title and meta | `PAGE_ROW_TITLE`, `PAGE_ROW_META` |
-| GENRE · LENGTH / Deep House · 6:12 | Table header and metadata | `font-fira` 9 uppercase muted, 11 secondary |
-| RESOMIX | Display | `font-benzin`, brand display |
-
-## Spacing and layout
-
-![Spacing and layout section](docs/lab-design/03-spacing.png)
-
-Every size is a token that scales with the screen. The desktop design is drawn at 1280 px wide and the phone design at 393 px, and the layout switches at 1024 px.
-
-**Size steps.** A few of the steps used most. Each is `var(--px-N)`, N pixels at the design size: `--px-2`, `--px-4`, `--px-6`, `--px-8`, `--px-10`, `--px-12`, `--px-14`, `--px-16`, `--px-20`, `--px-24`, `--px-28`, `--px-32`, `--px-40`, `--px-44`, `--px-48`, `--px-64`. All 322 steps are in [`tokens/pixels.css`](tokens/pixels.css).
-
-**Layout rules**
-
-- Desktop is drawn at 1280 px and the phone at 393 px. The layout switches at 1024 px.
-- Sizes are `--px-N` tokens in rem, so the whole interface scales with the screen. Never a raw pixel value. The root size is `clamp(12.8px, 1.25vw, 16px)` on desktop and `clamp(10px, 4.07vw, 26px)` below 1024 px.
-- Content is at most 78 rem wide (1,248 px at the design size).
-- Touch targets are at least 24 px, and 44 px for main controls on a phone.
-- Nothing hides under the player bar or other fixed bars, and edges respect the phone's safe areas.
-
-## Surfaces, lines and marks
-
-![Surfaces, lines and marks section](docs/lab-design/04-surfaces.png)
-
-Square panels on a solid surface with a thin token border. A short accent bar in the top left corner says what a block is. A hairline means it presents, a thicker bar means you can press it.
-
-| Example | Pattern | Defined as |
-|---|---|---|
-| YOUR PLAN, "Information only, nothing to press." | Panel that presents (hairline mark) | `PAGE_PANEL` |
-| OPEN PLAYLIST, "The whole block is a control." | Panel you can press (full mark) | `PAGE_PANEL_INTERACTIVE` |
-| A panel inside a panel, no mark | Plain sub-panel | `PAGE_PANEL_PLAIN` |
-| Apple Music · Connected | Inset row | `PAGE_INSET_ROW` |
-| SEARCH THE CATALOGUE OR UPLOAD A TRACK | Workspace panel | `WORKSPACE_PANEL_CLASS` (Sonic Discovery, Track Intelligence) |
-
-**Corners, lines and focus**
-
-| Part | Value |
-|---|---|
-| Panel corner, square | `--rx-radius-panel` 0 |
-| Control corner | `--rx-radius-control` 2px |
-| Cut corner, primary action and selected card | `.ws-btn-primary`, `--rx-notch-sm` 6px, `--rx-notch-md` 10px |
-| State marker on a row | `.pl-row[data-playing]`, inset 3px accent |
-| Focus ring (press Tab to see it) | `.ws-focus-ring`, `--rx-ring` = `0 0 0 1px #050505f2, 0 0 0 3px #ff8f74eb` |
-
-## Buttons and fields
-
-![Buttons and fields section](docs/lab-design/05-controls.png)
-
-One primary button per view, filled with the accent and cut at the top right corner. Everything else is a bordered secondary button. Labels are short verbs in uppercase mono.
-
-**Workspace buttons.** Sonic Discovery and Track Intelligence. 44 px tall, the primary one cut at the top right.
-
-| Label | Kind | Defined as |
-|---|---|---|
-| FIND SIMILAR TRACKS | Primary | `WORKSPACE_BTN_PRIMARY` |
-| SEARCHING… | Primary, working | `WORKSPACE_BTN_PRIMARY`, disabled while the request runs |
-| LOAD 25 MORE | Secondary | `WORKSPACE_BTN_SECONDARY` |
-
-**Page buttons.** Profile, Library, plans and the lab. 36 px tall, mono uppercase labels.
-
-| Label | Kind | Defined as |
-|---|---|---|
-| SAVE CHANGES | Primary | `PAGE_BTN_PRIMARY` |
-| SHARE | Secondary | `PAGE_BTN_SECONDARY` |
-| ← BACK TO LIBRARY | The way out of a page | `PAGE_BTN_BACK` |
-| DELETE PLAYLIST | Destructive | `PAGE_BTN_DANGER`, always confirms first |
-| FORGOT PASSWORD? | Text link | `PAGE_TEXT_LINK` |
-
-**Blocked control.** A control the user cannot use yet stays visible and pressable (`aria-disabled`, not `disabled`), and pressing it says why. Example: RATE THIS TRACK, `aria-disabled` plus an info toast.
-
-**Badges.** CATALOGUE (`WORKSPACE_BADGE`), ACTIVE TASK (`WORKSPACE_BADGE_ACCENT`).
-
-**Fields.** "Search a track or artist" (`WORKSPACE_FIELD_CLASS`); PLAYLIST NAME, a page field with its label (`PAGE_FIELD_LABEL`, `PAGE_FIELD`).
-
-## Sonic Discovery
-
-![Sonic Discovery section](docs/lab-design/06-discovery.png)
-
-The pieces of the Sonic Discovery page, the real components with sample data. Pick a task, the reference you searched from, and the ranked results with their match bars.
-
-**Task cards.** A radio pair drawn as cards. The selected card has the accent border, the cut corner and the Selected tag.
-
-| Card | State | Copy | Output |
-|---|---|---|---|
-| FIND SIMILAR TRACKS | Selected | Go from one reference to a ranked working shortlist you can audition. | RANKED SIMILARITY PLAYLIST |
-| ANALYSE A TRACK | Select | Read the track before deciding where it belongs. | TRACK INTELLIGENCE PROFILE |
-
-**Reference chip.** The track the search starts from, once chosen: "Reference selected", the title, then artist and length, a source badge and Cancel. From the catalogue (`ReferenceChip`, source catalogue: Night signal, Sample artist · 6:12) or an upload (source upload: my-demo-final.wav, 5:40 · WAV).
-
-**Results.** The desktop table, one row per state. Hover a row, or reach it with Tab, to see its actions take the match bar's place. In the app a playing row also opens its player underneath, and phones use their own stacked rows. Columns: #, Artist, Title, Label, Year, Genre, Length, Match.
-
-| # | Row | State | Genre | Length | Match |
-|---|---|---|---|---|---|
-| 1 | Hover me | At rest | Deep House | 6:12 | TOP 9.30 |
-| 2 | Every other row | At rest, alternate | Tech House | 5:48 | 9.00 |
-| 3 | Chosen, not playing | Selected | Melodic House | 7:03 | 8.70 |
-| 4 | Accent marker | Playing | Techno | 6:30 | 8.40 |
-| 5 | Grey marker | Paused | Progressive House | 8:01 | 8.10 |
-| 6 | No preview | Unavailable | Afro House | 5:55 | 7.70 |
-
-**Match bar.** How close each result is to the reference. The figure under it is the score out of ten, and the top row carries the word.
-
-| Shown | Meaning |
-|---|---|
-| TOP 9.30 | Top match, rank 1, score 0.93 |
-| 8.60 | Fifth, rank 5, score 0.86 |
-| 7.40 | Twentieth, rank 20, score 0.74 |
-| 5.80 | Fiftieth, rank 50, score 0.58 |
-| 8.60 | Phone width, `MatchBar` compact, 96 px |
-
-## Feedback
-
-![Feedback section](docs/lab-design/07-feedback.png)
-
-Toasts for anything that needs no answer, dialogs only when the user must decide or type. Every action ends with a message saying what happened, including when nothing changed.
-
-**Toasts.** Full-width banners at the top on a phone, top right from a tablet up. They never block, last 4 seconds and stack up to five.
-
-| Kind | Rule | Call |
-|---|---|---|
-| Success | Names the thing | `toast.success` |
-| Info | Nothing changed, or why not | `toast.info` |
-| Error | What failed and what to do | `toast.error` |
-| Working | Then the result in the same toast | `toast.loading`, `toast.update` |
-
-**Dialogs.** Only when the user must decide or type. Escape closes them and focus goes back to the button that opened them.
-
-| Example | Kind | Component |
-|---|---|---|
-| REMOVE A TRACK | Confirm, destructive | `ConfirmDialog` tone danger |
-| RENAME A PLAYLIST | Ask for a value | `PromptDialog` |
+- **Spacing** on a 4px base, `space-1` to `space-18`. Inside a card `space-5`; between cards `space-4`; between sections `space-8`; landing sections `space-18`.
+- **Radii.** `radius-sm` controls, `radius-md` cards and menus, `radius-lg` drawers and dialogs, `radius-xl` marketing tiles (the brand's rounded-square tile), `radius-pill` pills and switches only.
+- **Depth.** The page is flat. Only floating things (`Drawer`, `Dialog`, menus, `Toast`, the open command bar) get `shadow-overlay` on `bg-overlay`. `shadow-lift` marks the selected segment and a dragged row.
+- **Sizes.** Controls `control-sm` (32) / `control-md` (40) / `control-lg` (48); pointer targets never under `target-min` (24); sidebar `sidebar-width`; drawers `drawer-width`; content capped at `content-max`.
+- **Motion.** `duration-fast` for hover, `duration-base` for tabs and disclosure, `duration-slow` for drawers, always `ease-standard`. With reduced motion everything is instant and the skeleton shimmer stops.
 
 ## States
 
-![States section](docs/lab-design/08-states.png)
+Every interactive element has rest, hover, focus-visible, pressed and disabled; toggles add selected.
 
-Every view that loads or changes data has a loading, empty, error and blocked state, each designed, never left blank.
+- **Focus** is a 2px `focus` ring with a 2px offset on everything, in both themes. Never remove it.
+- **Hover** lightens the fill (`bg-hover`, `accent-hover`) and strengthens the edge (`border-strong`).
+- **Selected** adds a 2px `accent` edge plus an icon or word (check, "Selected", "Playing"). Colour never carries the state alone.
+- **Disabled** uses `bg-sunken` and `text-disabled`. Prefer `aria-disabled` with a reason ("Add a reference track first") over a silent disabled control. A busy control ("Searching…") is not disabled: keep its label readable and set `aria-busy`.
+- **Loading** uses `Skeleton` in the shape of the content plus one line with a realistic time: catalogue searches "usually 1–2 seconds", uploads "10–15 seconds".
+- **Empty** uses `EmptyState`: what will be here, how to get it, one action.
+- **Errors** say what happened and what to do, next to where it happened (`Field` error, `Toast` with Retry).
 
-| State | Example | Rule |
-|---|---|---|
-| Loading | "Loading your playlists…" (skeleton in `role=status`) | Skeletons shaped like the real content, announced to screen readers. While refreshing, the last good data stays. |
-| Empty | "No playlists of your own yet." + CREATE A PLAYLIST | Say what is missing in plain words and offer the next step as a button. |
-| Error | "Couldn't load your playlists. Check your connection, then try again." + TRY AGAIN | Say what failed and what to do, with a retry where it can help. Keep whatever already loaded. |
-| Blocked | — | A control the user cannot use yet stays visible and pressable, and pressing it explains why. |
-| Destructive | — | Removing or deleting asks first, names the exact thing and says whether it can be undone. |
+## Writing
 
-**Words**
+- Sentence case for every title, button, tab and label. No all-caps, no bracketed `[labels]`, no terminal-style copy.
+- Buttons are a verb plus an object: "Find similar tracks", "Continue session", "Save to crate", "Delete session". Never "Submit", "OK", "Click here".
+- The same action has the same label everywhere: the site and the app both say **Try Sonic Discovery** for the entry point.
+- Speak to the user ("your crate", "you stopped at track 16"); Resomix is "we".
+- Numbers are real and specific ("4 maybes to decide", "About 5 minutes"). If there's nothing true to say, drop the line.
+- Before and after, from the live site: "START WITH A TRACK." → "Start with a track"; "PRICING" → "Pricing"; "Back to Home" → "Back to home".
+- Describe what PYXIS-1 does for the user (finds tracks that sound alike, blends several similarity views). Don't say "model", "deep learning" or "training", and don't publish catalogue size, uptime, latency or security figures unless they are in the capability register.
 
-- Sentence case for headings, buttons and labels. Uppercase only where the design applies it.
-- Buttons name the action (Create a playlist, Remove), never OK or Continue.
-- No dashes as punctuation and no colons inside a sentence.
-- Loading text ends with an ellipsis (Saving…). Names in quotes use curly quotes (“Warm-up”).
-- Never internal model names, raw IDs or error codes.
+## Accessibility
 
-## Motion
+- **Contrast.** Text 4.5:1; large text, icons, control edges and focus 3:1, on the ground they sit on, in both themes. `npm run check` proves it for every token pair.
+- **Keyboard.** ⌘K / Ctrl K opens search from anywhere; Space plays or pauses the focused track; K / M / P keep, maybe, pass; Esc closes the top overlay and returns focus; arrows move inside tab lists, radio groups and menus.
+- **Semantics.** `tablist`/`tab` for workbench tabs, `radiogroup`/`radio` for choice cards, `switch` for switches, `aria-current` for the current page and loop step, `aria-pressed` for triage and play, `role="status"`/`alert` for toasts, `aria-busy` while loading.
+- **Targets** are at least `target-min` (24px); main controls use `control-md` or larger.
+- Never autoplay audio on page load. The playing track is always visible and stoppable.
 
-![Motion section](docs/lab-design/09-motion.png)
+## Icons and logo
 
-Short and quiet. Fades and colour changes of 120 to 160 ms, never movement for its own sake, and none at all when the device asks for reduced motion.
+- **Icons.** Thin line icons on a 24px grid, 1.5px stroke, round caps and joins, drawn in `currentColor` at 20px (16px inside small controls and pills). No emoji, no filled icons, no icon without a label except icon buttons with an `aria-label`. Names: home, compass, layers, library, wave, crate, search, upload, play, pause, check, clock, x, alert, info, loop, pin, more, chev, up.
+- The app's current 83 icon files are in [`assets/icons/`](assets/icons) for reference. They mix styles and colours and are to be replaced by the brand line set; see [the migration guide](docs/migration-v3.md#clean-up-found-during-the-audit).
+- **Logo.** The wordmark on headers and footers, the signet "R" where space is tight (favicon, app icon, collapsed sidebar). White on `bg-canvas` in Studio, brand black on Daylight. Minimum width 50px for the wordmark, 25px for the signet. Don't stretch, recolour, outline, add effects, or rebuild it in type.
 
-| Token | Value | Use |
-|---|---|---|
-| `--rx-duration-fast` | `.12s` | Row hover, revealing a row's actions |
-| `--rx-duration-base` | `.16s` | Buttons, borders, cards |
-| `--rx-ease-standard` | `ease` | The easing for both |
-| `workspace-panel-in` | 150 ms fade | A panel arriving, off with reduced motion |
+## The product frame
 
-## Icons
+- **App shell.** `AppShell`: sidebar with Home, Tools (Sonic Discovery, Track Intelligence), Your work (Sessions, Library), Pricing and Account. `CommandBar` (⌘K) and `WorkbenchTabs` layer on top. Marketing pages use `SiteShell`.
+- **Home** for signed-in users: a greeting, up to three `NextStepCard`s (Continue → Decide → Start), recent `SessionCard`s, and at most three `StatTile`s. A first visit shows only Start plus an `EmptyState` that explains the loop.
+- **Discover** starts with one large field (paste a link, upload, or pick from the library) and the search mode as three `ChoiceCard`s: Sound alike, Sound alike same genre, Blend. Results are `TrackRow`s with `MatchScore` and `TriageControl`; the open track lives in a `Drawer`.
+- **Sessions** are saved Crate Sessions: `LoopTracker`, a `SegmentedControl` filter (All / Kept / Maybe / Not decided) and the result list.
+- **Library** lists uploaded tracks one per row (one track per action, no bulk select). Bulk upload (up to 500 files) uses `UploadQueue`.
+- **Track Intelligence** is a report in a tab: summary at the top, then `Disclosure` sections Overview, For DJs, For catalogues, Technical.
+- **The tool workspace.** Every tool opens the same page around one track: `AppShell` → `SessionHeader` → sticky `ReferenceStrip` → the tool's content → `PlayerBar` docked at the bottom. One `TrackInput` everywhere; `TrackActions` on every track (decide, then Use as new reference, Analyse, Add to playlist, Open in Apple Music, Copy link). One player store drives every play button; waveforms and spectrograms draw precomputed server data.
+- **The website** (resomix.com) works like the product's home, not a brochure: `Composer` hero → tool grid of `ToolCard`s → carousels of `MediaCard`s with sonic covers → plans (`PricingCard`) → a one-line footer.
+- **Sonic covers.** Where a picture is needed, draw the sound: a radial fingerprint from the track's analysis in one `data-*` colour on `bg-raised`. No stock photos of DJs, headphones or crowds.
 
-![Icons section](docs/lab-design/10-icons.png)
+## Brand layer: the universe, used sparingly
 
-Every icon file in the app's icon folder, by file name. Some are older and no longer used. All 83 are in [`assets/icons/`](assets/icons). Most are drawn in white for the dark UI, so they may look blank on GitHub's light theme.
+The brutal "Resomix universe" is the brand's signature, and it belongs where people arrive, not where they work.
 
-<details>
-<summary>All 83 icon files</summary>
+- **Use it on** marketing heroes and closing banners (Benzin display; uppercase allowed only here and only for the headline), the hairline frame lines on landing pages, the "Join the Resomix universe" footer band, and empty states in the app (one display line).
+- **Never inside** result lists, controls, tables, the player, analysis values, or any text people scan.
+- **Never as claims.** Terminal-style lines must not state uptime, latency, encryption standards, data locations or system versions unless the capability register approves them. Decorative text that reads as fact is a claim.
 
-| Icon | Icon | Icon | Icon |
-|---|---|---|---|
-| [`analysis.svg`](assets/icons/analysis.svg) | [`angle_left.svg`](assets/icons/angle_left.svg) | [`AngleDown.svg`](assets/icons/AngleDown.svg) | [`arrow_big_down_left_stroke.svg`](assets/icons/arrow_big_down_left_stroke.svg) |
-| [`arrow_big_down_stroke.svg`](assets/icons/arrow_big_down_stroke.svg) | [`arrow_down_right.svg`](assets/icons/arrow_down_right.svg) | [`arrow_small_down.svg`](assets/icons/arrow_small_down.svg) | [`arrow_small_up.svg`](assets/icons/arrow_small_up.svg) |
-| [`arrow_upload.svg`](assets/icons/arrow_upload.svg) | [`ArrowBigDown2.svg`](assets/icons/ArrowBigDown2.svg) | [`bad.svg`](assets/icons/bad.svg) | [`brakes.svg`](assets/icons/brakes.svg) |
-| [`cart_add_white.svg`](assets/icons/cart_add_white.svg) | [`cart_add.svg`](assets/icons/cart_add.svg) | [`cart_remove_white.svg`](assets/icons/cart_remove_white.svg) | [`cart_remove.svg`](assets/icons/cart_remove.svg) |
-| [`cart_white.svg`](assets/icons/cart_white.svg) | [`cart.svg`](assets/icons/cart.svg) | [`cross.svg`](assets/icons/cross.svg) | [`divider.svg`](assets/icons/divider.svg) |
-| [`download.svg`](assets/icons/download.svg) | [`error_cross.svg`](assets/icons/error_cross.svg) | [`export_black.svg`](assets/icons/export_black.svg) | [`export.svg`](assets/icons/export.svg) |
-| [`facebook.svg`](assets/icons/facebook.svg) | [`fine.svg`](assets/icons/fine.svg) | [`fire.svg`](assets/icons/fire.svg) | [`good.svg`](assets/icons/good.svg) |
-| [`grid_tunnel.svg`](assets/icons/grid_tunnel.svg) | [`heart-filled.svg`](assets/icons/heart-filled.svg) | [`heart-stroke.svg`](assets/icons/heart-stroke.svg) | [`info.svg`](assets/icons/info.svg) |
-| [`instagram.svg`](assets/icons/instagram.svg) | [`layers.svg`](assets/icons/layers.svg) | [`line1.svg`](assets/icons/line1.svg) | [`line2.svg`](assets/icons/line2.svg) |
-| [`line3.svg`](assets/icons/line3.svg) | [`loading_bubbles.svg`](assets/icons/loading_bubbles.svg) | [`logo_header.svg`](assets/icons/logo_header.svg) | [`matches.svg`](assets/icons/matches.svg) |
-| [`menu_separator.svg`](assets/icons/menu_separator.svg) | [`mobile_tunnel.svg`](assets/icons/mobile_tunnel.svg) | [`more.svg`](assets/icons/more.svg) | [`network-aleft.svg`](assets/icons/network-aleft.svg) |
-| [`next_track.svg`](assets/icons/next_track.svg) | [`pause_white.svg`](assets/icons/pause_white.svg) | [`pause.svg`](assets/icons/pause.svg) | [`play_white.svg`](assets/icons/play_white.svg) |
-| [`play.svg`](assets/icons/play.svg) | [`popular_beats_frame_mobile.svg`](assets/icons/popular_beats_frame_mobile.svg) | [`popular_beats_frame.svg`](assets/icons/popular_beats_frame.svg) | [`previous_track.svg`](assets/icons/previous_track.svg) |
-| [`private.svg`](assets/icons/private.svg) | [`public.svg`](assets/icons/public.svg) | [`r_icon_footer.svg`](assets/icons/r_icon_footer.svg) | [`reference.svg`](assets/icons/reference.svg) |
-| [`rename_black.svg`](assets/icons/rename_black.svg) | [`rename.svg`](assets/icons/rename.svg) | [`scale_mobile.svg`](assets/icons/scale_mobile.svg) | [`scale.svg`](assets/icons/scale.svg) |
-| [`search.svg`](assets/icons/search.svg) | [`share_black.svg`](assets/icons/share_black.svg) | [`share.svg`](assets/icons/share.svg) | [`sonic_discovery.svg`](assets/icons/sonic_discovery.svg) |
-| [`sound_loud.svg`](assets/icons/sound_loud.svg) | [`sound_low.svg`](assets/icons/sound_low.svg) | [`sound_mute.svg`](assets/icons/sound_mute.svg) | [`sound_waves_2.svg`](assets/icons/sound_waves_2.svg) |
-| [`sound_waves_outline.svg`](assets/icons/sound_waves_outline.svg) | [`sound_waves.svg`](assets/icons/sound_waves.svg) | [`sound_white.svg`](assets/icons/sound_white.svg) | [`sound.svg`](assets/icons/sound.svg) |
-| [`star_white.svg`](assets/icons/star_white.svg) | [`star.svg`](assets/icons/star.svg) | [`success.svg`](assets/icons/success.svg) | [`thumbs-down.svg`](assets/icons/thumbs-down.svg) |
-| [`thumbs-up.svg`](assets/icons/thumbs-up.svg) | [`time.svg`](assets/icons/time.svg) | [`track_1.svg`](assets/icons/track_1.svg) | [`track_2.svg`](assets/icons/track_2.svg) |
-| [`track_select_separator_line.svg`](assets/icons/track_select_separator_line.svg) | [`twitter_x.svg`](assets/icons/twitter_x.svg) | [`vertical_line.svg`](assets/icons/vertical_line.svg) |   |
+## Moving the app to v3
 
-</details>
+Swapping in `tokens/resomix.css` restyles every screen at once: v3 colours in both themes, rounded corners instead of cut ones, the 2px focus ring, teal success and the new warning and info colours. The rest (sentence case, labels in Helvetica, nothing under 12px, the accent rule) is component work, listed file by file in [docs/migration-v3.md](docs/migration-v3.md).
 
-## Where it lives
-
-![Where it lives section](docs/lab-design/11-code.png)
-
-Where each part is defined, for whoever builds the next version.
-
-| Part | File |
+| Before (today's app) | After (v3) |
 |---|---|
-| Colour, accent, focus and motion tokens | `apps/webapp/src/index.css` (`--rx-*`, `--color-*`) |
-| Size tokens | `apps/webapp/src/styles/pixels.css` (`--px-N`) |
-| Fonts | `apps/webapp/src/styles/fonts.css` |
-| Panels, page buttons, fields, kickers | `packages/ui/src/Content/pageChrome.ts` |
-| Workspace buttons, badges, fields, focus ring | `apps/webapp/src/sections/desktop/Workspace/workspacePanelStyles.ts` |
-| Task cards | `apps/webapp/src/sections/desktop/Workspace/TaskCard.tsx` |
-| Reference chip | `apps/webapp/src/sections/desktop/Workspace/ReferenceChip.tsx` |
-| Results table and its rows | `apps/webapp/src/sections/desktop/Playlist/PlaylistTable.tsx` |
-| Row states and the reveal of row actions | `apps/webapp/src/index.css` (`.pl-row`) |
-| Match bar | `apps/webapp/src/components/Playlist/MatchBar.tsx` |
-| Toasts | `packages/hooks/src/Toast/toast.ts` |
-| Dialogs | `packages/ui/src/Modals/` (`Dialog`, `ConfirmDialog`, `PromptDialog`) |
-| House UX and copy rules | `.claude/skills/resomix-ux/SKILL.md` and `instructions.md` §7 |
+| Uppercase mono labels, 9px table headers | Sentence case, `label` 13px and `caption` 12px in Helvetica |
+| Body in Helvetica Light (300) | `body` at regular weight (400) |
+| Square panels, cut-corner buttons | `radius-md` panels, `radius-sm` controls |
+| Accent on corner marks, kickers and separators | Accent on four things only |
+| Translucent whites (`#ffffffb8`) | Solid colours per theme, checked on every ground |
+| Success green, no warning or info | Teal success, amber warning, blue info |
+| Light theme with black page ground | Daylight |
+| 322 `--px-N` steps | `space-1` to `space-18` for new work (`--px-N` kept for existing layouts) |
 
----
-
-## Tokens, contrast and tooling
-
-![Token overview with contrast ratios](docs/overview.svg)
-
-The repo keeps two layers:
-
-| Layer | What it is | Files |
-|---|---|---|
-| **Live app (`--rx-*`)** | The tokens above, with the contrast fixes applied | `tokens/rx.json` (source), `tokens/rx.css`, `tokens/pixels.css` |
-| **v3 "calm"** | The direction the app is moving to: semantic tokens in two themes (Studio and Daylight), plus guidelines | `tokens/v3/tokens.json`, `docs/guidelines-v3.md` |
+## Tooling
 
 ```bash
-npm run build   # regenerate tokens/rx.css, tokens/pixels.css and docs/overview.svg from tokens/rx.json
-npm run check   # WCAG contrast check on every text, edge and theme pair
-npm test        # both, and fails if a generated file is out of date
-npm run capture # retake docs/lab-design/ screenshots and assets/icons/ from /lab/design (needs Chrome)
+npm run build    # tokens/resomix.css, tokens/pixels.css, docs/overview.svg and the generated tables
+npm run check    # contrast for every token pair in both themes, and every alias points at a real token
+npm test         # both, and fails if a generated file is out of date
+npm run capture  # retake the docs/lab-design screenshots and assets/icons from /lab/design (needs Chrome)
 ```
 
-To change a token, edit `tokens/rx.json`, run `npm test`, and commit the JSON with the generated files. CI runs the same check on every push and pull request.
+To change a token, edit [`tokens/v3/tokens.json`](tokens/v3/tokens.json) (or [`tokens/compat.json`](tokens/compat.json) for an alias), run `npm test`, and commit the source with the generated files. CI runs the same check on every push and pull request.
 
-In the webapp, swap the `--rx-*` and `--color-*` block in `apps/webapp/src/index.css` for `tokens/rx.css`, and the `--px-*` block in `styles/pixels.css` for `tokens/pixels.css`.
+| Path | What it is |
+|---|---|
+| `tokens/v3/tokens.json` | The source: v3 colours in both themes, type, spacing, radius, depth, sizes, motion |
+| `tokens/compat.json` | Today's names mapped to v3, the font stacks, the `--px-N` steps |
+| `tokens/resomix.css` | Generated: everything the app needs in one stylesheet |
+| `tokens/pixels.css` | Generated: the `--px-N` size steps |
+| `tokens/legacy/` | The pre-v3 tokens, with the 2026-10-31 contrast fixes, kept for reference |
+| `docs/guidelines-v3.md` | The v3 guidelines as written in the design system |
+| `docs/migration-v3.md` | The token map and the component changes, by file |
+| `docs/lab-design/` | The app before v3: every section of `/lab/design` with screenshots |
+| `docs/contrast-audit.md` | The 2026-10-31 contrast audit of the pre-v3 tokens |
+| `docs/source-map.md` | Where each part lives in the webapp |
+| `assets/icons/` | The app's current icon files |
 
-**Contrast rules**
-
-- Text: 4.5:1 on every ground it can sit on, including the selected and playing tints.
-- Edges of things people operate, the focus ring and chart marks: 3:1.
-- `--rx-color-accent` is for fills, bars and markers. Small orange text uses `--rx-color-accent-text`.
-- `--rx-color-border-subtle`, `--rx-color-border-default` and the playlist dividers are decorative. Never use them as the only edge of a control; use `--rx-color-border-control`.
-
-What changed and why: [docs/contrast-audit.md](docs/contrast-audit.md). Where each part lives: [docs/source-map.md](docs/source-map.md).
-
-**Not in this repo**
-
-- **Font files.** Helvetica Neue, Fira Code, Benzin and Auger Mono are served from the webapp's `/fonts`. Helvetica Neue and Benzin are licensed and Auger Mono is loaded as trial files, so only the families and fallbacks are recorded here.
-- **Component code.** Panels, buttons, task cards, the results table and toasts live in the webapp and `packages/ui`.
-- **Screenshots** in `docs/lab-design/` are a snapshot of staging. Retake them after the app changes.
+**Not in this repo.** Font files: Helvetica Neue and Benzin are licensed and served from the webapp's `/fonts` (Auger Mono is loaded there as trial files). Component code: it lives in the webapp and `packages/ui`.
