@@ -30,7 +30,20 @@ const space = t.space.steps.map((s) => line(s.name, px(`${s.px}px`)));
 const shape = t.shape.map((s) => line(s.name, s.name.startsWith('radius') && s.value === '999px' ? '999px' : px(s.value)));
 const elev = t.elevation.map((s) => line(s.name, s.value));
 const size = t.size.map((s) => line(s.name, px(s.value)));
-const motion = t.motion.map((s) => line(s.name, s.value));
+// Motion keeps the transitions.dev names (no --rx- prefix) so its snippets work unchanged; the old
+// V2.1 motion names stay as aliases. Distances and blur use --px-N like every other length.
+const m = t.motion;
+const plain = (name, value) => `  --${name}: ${value};`;
+const motion = [
+  `  /* Motion: ${m.source.split('(')[0].trim()} */`,
+  ...m.durations.map((s) => plain(s.name, s.value)),
+  ...m.easings.map((s) => plain(s.name, s.value)),
+  ...m.distances.map((s) => plain(s.name, px(s.value))),
+  ...m.scales.map((s) => plain(s.name, s.value)),
+  ...m.blur.map((s) => plain(s.name, px(s.value))),
+  ...Object.entries(m.aliases).map(([o, n]) => plain(o, `var(--${n})`)),
+];
+const reduced = m.durations.map((s) => `    --${s.name}: 0ms;`).join('\n');
 
 const cls = t.type.styles.map((s) => [
   `.rx-${s.name} {`,
@@ -61,9 +74,7 @@ ${[...families, '', ...space, '', ...shape, '', ...elev, '', ...size, '', ...mot
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --rx-duration-fast: 0ms;
-    --rx-duration-base: 0ms;
-    --rx-duration-slow: 0ms;
+${reduced}
   }
 }
 

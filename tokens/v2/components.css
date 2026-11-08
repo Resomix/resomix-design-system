@@ -1,6 +1,12 @@
 /* Resomix V2.1 components. Hand-written; uses only --rx-* tokens from tokens/v2/tokens.css.
    Every component lists its states: default, hover, active, focus, selected, disabled, busy, error.
-   Disabled = [disabled]; blocked = [aria-disabled="true"] (stays focusable, pressing it explains why). */
+   Disabled = [disabled]; blocked = [aria-disabled="true"] (stays focusable, pressing it explains why).
+   Motion follows transitions.dev (github.com/Jakubantalik/transitions.dev): the duration, easing,
+   distance, scale and blur tokens in tokens.css, and these transitions adapted to V2.1 parts:
+   06 modal (.rx-dialog), 22 toast (.rx-toast), 27 toggle (.rx-switch), 25 checkbox check
+   (.rx-check), 12 error shake (.rx-input.is-shaking), 14 skeleton pulse and reveal
+   (.rx-skeleton, .rx-reveal), 24 learn-more hover (.rx-link__chevron). Entrances use
+   @starting-style, so nothing needs JS to appear and everything is visible at rest. */
 
 /* ── Focus: one ring everywhere ─────────────────────────────────────────── */
 .rx-focus:focus-visible,
@@ -56,10 +62,13 @@
   text-transform: uppercase;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color var(--rx-duration-base) var(--rx-ease-standard),
-    border-color var(--rx-duration-base) var(--rx-ease-standard),
-    color var(--rx-duration-base) var(--rx-ease-standard);
+  transition: background-color var(--duration-quick) var(--ease-smooth-out),
+    border-color var(--duration-quick) var(--ease-smooth-out),
+    color var(--duration-quick) var(--ease-smooth-out),
+    transform var(--duration-quick) var(--ease-smooth-out);
 }
+/* Press: a small give, like a hardware key. */
+.rx-btn:active:not([disabled], [aria-disabled="true"], [aria-busy="true"]) { transform: scale(var(--scale-small)); }
 .rx-btn--sm { height: var(--rx-control-sm); padding-inline: var(--rx-space-3); font-size: var(--px-12); }
 .rx-btn--lg { --notch: var(--rx-notch-md); height: var(--rx-control-lg); padding-inline: var(--rx-space-6); }
 .rx-btn--xl { --notch: var(--rx-notch-lg); height: var(--rx-control-xl); padding-inline: var(--rx-space-8); }
@@ -75,7 +84,7 @@
   z-index: -1;
   background: var(--rx-color-accent);
   clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
-  transition: background-color var(--rx-duration-base) var(--rx-ease-standard);
+  transition: background-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-btn--primary:hover::before { background: var(--rx-color-accent-hover); }
 .rx-btn--primary:active::before { background: var(--rx-color-accent-pressed); }
@@ -126,7 +135,7 @@
   background: transparent;
   color: var(--rx-color-text-primary);
   cursor: pointer;
-  transition: background-color var(--rx-duration-fast) var(--rx-ease-standard), border-color var(--rx-duration-fast) var(--rx-ease-standard);
+  transition: background-color var(--duration-quick) var(--ease-smooth-out), border-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-icon-btn--lg { width: var(--rx-control-lg); height: var(--rx-control-lg); }
 .rx-icon-btn svg { width: var(--rx-icon-md); height: var(--rx-icon-md); }
@@ -147,9 +156,35 @@
   text-decoration-thickness: 1px;
   text-underline-offset: var(--px-4);
   text-decoration-color: var(--rx-color-border-control);
-  transition: text-decoration-color var(--rx-duration-fast) var(--rx-ease-standard);
+  transition: text-decoration-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-link:hover { text-decoration-color: var(--rx-color-text-primary); }
+
+/* transitions.dev 24, learn-more hover: the chevron slides and its arms spread into an arrow.
+   Markup: <a class="rx-link"><span>Label</span><span class="rx-link__chevron" aria-hidden="true">
+   <svg viewBox="0 0 16 16"><path class="rx-link__arm rx-link__arm--top" d="M6 4L10 8"/>
+   <path class="rx-link__arm rx-link__arm--bot" d="M10 8L6 12"/></svg></span></a> */
+.rx-link:has(.rx-link__chevron) { display: inline-flex; align-items: center; gap: var(--rx-space-1); }
+.rx-link__chevron {
+  display: inline-flex;
+  flex: none;
+  transform: translateX(0);
+  transition: transform var(--duration-medium) var(--ease-smooth-out);
+}
+.rx-link__chevron svg { width: var(--rx-icon-sm); height: var(--rx-icon-sm); overflow: visible; }
+.rx-link__arm {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  transform-box: view-box;
+  transform-origin: 10px 8px;
+  vector-effect: non-scaling-stroke;
+  transition: transform var(--duration-medium) var(--ease-smooth-out);
+}
+.rx-link:is(:hover, :focus-visible) .rx-link__chevron { transform: translateX(var(--px-2)); }
+.rx-link:is(:hover, :focus-visible) .rx-link__arm--top { transform: rotate(8deg); }
+.rx-link:is(:hover, :focus-visible) .rx-link__arm--bot { transform: rotate(-8deg); }
 .rx-link--inline { font-family: inherit; font-size: inherit; letter-spacing: inherit; text-transform: none; font-weight: inherit; }
 
 /* ── Fields ─────────────────────────────────────────────────────────────── */
@@ -182,8 +217,21 @@
   background: var(--rx-color-sunken);
   color: var(--rx-color-text-primary);
   font: 400 var(--px-15) / var(--px-24) var(--rx-font-sans);
-  transition: border-color var(--rx-duration-fast) var(--rx-ease-standard);
+  transition: border-color var(--duration-quick) var(--ease-out);
 }
+/* transitions.dev 12, error shake: add .is-shaking when a submit finds this field invalid
+   (remove it, force a reflow, add it again to replay). The error and its message stay until the
+   value is fixed: unlike the snippet, nothing auto-reverts. */
+.rx-input.is-shaking { animation: rx-shake calc(var(--duration-micro) * 3.5) linear; /* 280ms, as in the snippet */ }
+@keyframes rx-shake {
+  0% { transform: translateX(0); animation-timing-function: var(--ease-smooth-out); }
+  28.57% { transform: translateX(var(--distance-small)); animation-timing-function: var(--ease-smooth-out); }
+  57.14% { transform: translateX(calc(var(--distance-small) * -1)); animation-timing-function: var(--ease-smooth-out); }
+  78.57% { transform: translateX(var(--distance-micro)); animation-timing-function: var(--ease-smooth-out); }
+  100% { transform: translateX(0); }
+}
+.rx-field__error { transition: opacity var(--duration-fast) var(--ease-out); }
+@starting-style { .rx-field__error { opacity: 0; } }
 .rx-input--lg { height: var(--rx-control-lg); }
 .rx-input::placeholder { color: var(--rx-color-text-muted); opacity: 1; }
 .rx-input:hover { border-color: var(--rx-color-border-strong); }
@@ -204,18 +252,25 @@
   border-radius: var(--rx-radius-control);
   background: var(--rx-color-sunken);
   cursor: pointer;
-  transition: border-color var(--rx-duration-fast) var(--rx-ease-standard), background-color var(--rx-duration-fast) var(--rx-ease-standard);
+  transition: border-color var(--duration-quick) var(--ease-smooth-out), background-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-check[type="radio"] { border-radius: var(--rx-radius-round); }
 .rx-check:hover { border-color: var(--rx-color-border-strong); }
 .rx-check:checked { border-color: var(--rx-color-accent); background: var(--rx-color-accent); }
-.rx-check[type="checkbox"]:checked::after {
+.rx-check[type="checkbox"]::after {
   content: "";
   width: var(--px-10);
   height: var(--px-6);
   border-left: 2px solid var(--rx-color-text-on-accent);
   border-bottom: 2px solid var(--rx-color-text-on-accent);
   transform: translateY(-1px) rotate(-45deg);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--duration-quick) var(--ease-smooth-out);
+}
+/* transitions.dev 25, checkbox check: the box fills, then the tick draws from its short arm. */
+.rx-check[type="checkbox"]:checked::after {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path var(--duration-medium) var(--ease-smooth-out);
 }
 .rx-check[type="radio"]:checked { background: var(--rx-color-sunken); }
 .rx-check[type="radio"]:checked::after { content: ""; width: var(--px-8); height: var(--px-8); border-radius: var(--rx-radius-round); background: var(--rx-color-accent); }
@@ -235,7 +290,7 @@
   border-radius: var(--rx-radius-control);
   background: var(--rx-color-sunken);
   cursor: pointer;
-  transition: background-color var(--rx-duration-base) var(--rx-ease-standard), border-color var(--rx-duration-base) var(--rx-ease-standard);
+  transition: background-color var(--duration-quick) var(--ease-smooth-out), border-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-switch::after {
   content: "";
@@ -246,7 +301,9 @@
   height: var(--px-14);
   border-radius: 1px;
   background: var(--rx-color-text-secondary);
-  transition: transform var(--rx-duration-base) var(--rx-ease-standard), background-color var(--rx-duration-base) var(--rx-ease-standard);
+  /* transitions.dev 27, toggle: the thumb travels with a small overshoot; the track colour
+     changes at once. */
+  transition: transform var(--duration-medium) var(--ease-bounce), background-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-switch:hover { border-color: var(--rx-color-border-strong); }
 .rx-switch[aria-checked="true"] { background: var(--rx-color-accent); border-color: var(--rx-color-accent); }
@@ -287,7 +344,7 @@
   border-color: var(--rx-color-border-control);
   cursor: pointer;
   font: inherit;
-  transition: background-color var(--rx-duration-base) var(--rx-ease-standard), border-color var(--rx-duration-base) var(--rx-ease-standard);
+  transition: background-color var(--duration-quick) var(--ease-smooth-out), border-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-panel--press::before { height: var(--rx-mark-thick); }
 .rx-panel--press:hover { background: var(--rx-color-hover); border-color: var(--rx-color-border-strong); }
@@ -360,7 +417,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: color var(--rx-duration-fast) var(--rx-ease-standard);
+  transition: color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-nav-link:hover, .rx-tab:hover { color: var(--rx-color-text-primary); }
 .rx-nav-link[aria-current="page"], .rx-tab[aria-selected="true"] { color: var(--rx-color-text-primary); }
@@ -394,7 +451,7 @@
   position: relative;
   background: var(--rx-color-surface);
   border-bottom: var(--rx-border-width) solid var(--rx-color-border-subtle);
-  transition: background-color var(--rx-duration-fast) var(--rx-ease-standard);
+  transition: background-color var(--duration-quick) var(--ease-smooth-out);
 }
 .rx-row:nth-child(even) { background: var(--rx-color-surface-raised); }
 .rx-row:hover, .rx-row:focus-within { background: var(--rx-color-hover); }
@@ -436,7 +493,25 @@
   background: var(--rx-color-overlay);
   color: var(--rx-color-text-primary);
 }
-.rx-toast { box-shadow: var(--rx-shadow-overlay); max-width: var(--px-400); }
+.rx-toast {
+  box-shadow: var(--rx-shadow-overlay);
+  max-width: var(--px-400);
+  /* transitions.dev 22, toast: rises with a fade and cross-blur, slower in than out. Entering
+     needs no JS (@starting-style); add .is-closing, wait --duration-fast, then remove it. */
+  transition:
+    opacity var(--duration-medium) var(--ease-smooth-out),
+    transform var(--duration-medium) var(--ease-smooth-out),
+    filter var(--duration-medium) var(--ease-smooth-out);
+}
+@starting-style {
+  .rx-toast { opacity: 0; transform: translateY(var(--distance-toast)) scale(var(--scale-medium)); filter: blur(var(--blur-small)); }
+}
+.rx-toast.is-closing {
+  opacity: 0;
+  transform: translateY(var(--distance-toast)) scale(var(--scale-medium));
+  filter: blur(var(--blur-small));
+  transition-duration: var(--duration-fast);
+}
 .rx-toast::before, .rx-alert::before { content: ""; position: absolute; inset: -1px auto -1px -1px; width: var(--rx-marker); background: var(--tone); }
 .rx-toast > svg, .rx-alert > svg { width: var(--rx-icon-md); height: var(--rx-icon-md); color: var(--tone); }
 .rx-toast--success, .rx-alert--success { --tone: var(--rx-color-success); }
@@ -457,18 +532,37 @@
   border: var(--rx-border-width) solid var(--rx-color-border-strong);
   border-radius: var(--rx-radius-panel);
   box-shadow: var(--rx-shadow-overlay);
+  /* transitions.dev 06, modal: scales up from 0.96 on open, softer and faster on close
+     (add .is-closing, wait --duration-quick, then close). */
+  transform-origin: center;
+  transition:
+    transform var(--duration-fast) var(--ease-smooth-out),
+    opacity var(--duration-fast) var(--ease-smooth-out);
+}
+@starting-style { .rx-dialog { opacity: 0; transform: scale(var(--scale-large)); } }
+.rx-dialog.is-closing {
+  opacity: 0;
+  transform: scale(var(--scale-large));
+  transition-duration: var(--duration-quick);
 }
 .rx-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--rx-space-3); }
 
 .rx-skeleton {
   display: block;
   height: var(--px-14);
-  background: linear-gradient(90deg, var(--rx-color-surface-raised) 0, var(--rx-color-hover) 50%, var(--rx-color-surface-raised) 100%);
-  background-size: 200% 100%;
-  animation: rx-shimmer 1.4s linear infinite;
+  background: var(--rx-color-hover);
+  /* transitions.dev 14, skeleton: a slow pulse while loading... */
+  animation: rx-pulse 1000ms var(--ease-in-out) infinite;
 }
-@keyframes rx-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
-@media (prefers-reduced-motion: reduce) { .rx-skeleton { animation: none; } }
+@keyframes rx-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+/* ...then the real content arrives with a cross-fade and cross-blur. Put .rx-reveal on the
+   content that replaces the skeleton. */
+.rx-reveal { transition: opacity var(--duration-slow) var(--ease-in-out), filter var(--duration-slow) var(--ease-in-out); }
+@starting-style { .rx-reveal { opacity: 0; filter: blur(var(--blur-small)); } }
+@media (prefers-reduced-motion: reduce) {
+  .rx-skeleton { animation: none; }
+  .rx-input.is-shaking { animation: none; }
+}
 
 .rx-empty { display: grid; justify-items: start; gap: var(--rx-space-4); padding: var(--rx-space-8); border: var(--rx-border-width) dashed var(--rx-color-border-default); }
 

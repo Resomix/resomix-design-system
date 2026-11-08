@@ -104,17 +104,48 @@
   --rx-content-max: 78rem;
   --rx-reading-max: var(--px-680);
 
-  --rx-duration-fast: 120ms;
-  --rx-duration-base: 160ms;
-  --rx-duration-slow: 240ms;
-  --rx-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  /* Motion: The motion scale from transitions.dev */
+  --duration-stagger: 40ms;
+  --duration-micro: 80ms;
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+  --ease-linear: linear;
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);
+  --ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1);
+  --distance-micro: var(--px-4);
+  --distance-small: var(--px-6);
+  --distance-base: var(--px-8);
+  --distance-medium: var(--px-12);
+  --distance-toast: var(--px-16);
+  --distance-large: var(--px-30);
+  --scale-large: 0.96;
+  --scale-medium: 0.97;
+  --scale-small: 0.98;
+  --scale-tiny: 0.99;
+  --blur-small: var(--px-2);
+  --blur-medium: var(--px-3);
+  --blur-large: var(--px-8);
+  --rx-duration-fast: var(--duration-quick);
+  --rx-duration-base: var(--duration-quick);
+  --rx-duration-slow: var(--duration-fast);
+  --rx-ease-standard: var(--ease-smooth-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --rx-duration-fast: 0ms;
-    --rx-duration-base: 0ms;
-    --rx-duration-slow: 0ms;
+    --duration-stagger: 0ms;
+    --duration-micro: 0ms;
+    --duration-quick: 0ms;
+    --duration-fast: 0ms;
+    --duration-medium: 0ms;
+    --duration-slow: 0ms;
+    --duration-very-slow: 0ms;
   }
 }
 

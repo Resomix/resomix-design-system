@@ -3,7 +3,7 @@
 V2 "brutal" stays the look. V2.1 keeps every part of its character and fixes what kept it from meeting WCAG 2.2 AA and from being a complete system. Nothing in V2.1 comes from v3.
 
 - Tokens: [`tokens/v2/tokens.json`](../tokens/v2/tokens.json), generated as [`tokens/v2/tokens.css`](../tokens/v2/tokens.css) (`npm run build`).
-- Components: [`tokens/v2/components.css`](../tokens/v2/components.css), the `rx-*` classes with every state.
+- Components: [`tokens/v2/components.css`](../tokens/v2/components.css), the `rx-*` classes with every state and their transitions.
 - Contrast: `npm run check` tests 164 pairs, including the danger/accent hue gap.
 - Load order: `tokens/pixels.css`, then `tokens/v2/tokens.css`, then `tokens/v2/components.css`.
 
@@ -86,8 +86,44 @@ Each style is a class (`.rx-title-lg`) and its sizes use `--px-N`, so the type s
 - **Elevation**: the page is flat. Depth comes from the ground steps (canvas → surface → raised) and hairlines. Only floating things (dialogs, menus, toasts, drawers) get `shadow-overlay` with a `border-strong` edge.
 - **Focus**: `ring` = 1px canvas gap, then a 2px `focus` ring, on every focusable thing, never removed. Rows use a 2px inset ring.
 - **Size**: controls 32 / 36 / 44 / 52; icons 16 / 20 / 24; target minimum 24 (WCAG 2.5.8), 44 for main controls on phones; content 78rem; reading 680px.
-- **Motion**: fades and colour changes only. 120ms (rows), 160ms (buttons, cards), 240ms (a panel or toast arriving); 0 with reduced motion.
+- **Motion**: the transitions.dev scale and transitions. See [Motion](#motion) below.
 - **Explanatory canvases** (marketing only): a Canvas 2D diagram may move when the movement is the explanation, such as a playhead crossing a waveform, bars building into a profile, or match bars filling in rank order. Draw with the tokens, animate only while on screen, draw the finished frame with reduced motion and before the canvas is first seen, and give the canvas `role="img"` with a description. One per step, never as background decoration.
+
+## Motion
+
+V2.1 uses [transitions.dev](https://github.com/Jakubantalik/transitions.dev) for motion: its token scale and its transitions, adapted to V2.1's parts. The agent skill is installed in this repo and in resomix-web at `.claude/skills/transitions-dev/`; use it for any new motion (`transitions review`, `transitions apply`, `transitions refine`). The license allows use and changes in our products; it does not allow redistributing the collection itself.
+
+**Tokens** keep the transitions.dev names (no `--rx-` prefix) so its snippets work unchanged. Match a value by what the motion does, not by the number.
+
+| Token | Value | Use in V2.1 |
+|---|---|---|
+| `duration-micro` | 80ms | Shake segment, tooltip delay |
+| `duration-quick` | 150ms | Hover and press colour, borders, close of dialogs and menus |
+| `duration-fast` | 250ms | Dialog and menu open, toast close, tabs, page slide |
+| `duration-medium` | 350ms | Toast open, toggle travel, checkmark draw, link chevron |
+| `duration-slow` | 400ms | Panel open, content replacing a skeleton |
+| `duration-very-slow` | 500ms | Success moments, text reveal |
+| `ease-smooth-out` | cubic-bezier(0.22, 1, 0.36, 1) | The default for nearly everything |
+| `ease-in-out` / `ease-out` / `ease-linear` | | Swaps and reveals / tooltips and input borders / spinners |
+| `ease-bounce` | cubic-bezier(0.34, 1.36, 0.64, 1) | Toggle thumb, badge pop |
+| `distance-*`, `scale-*`, `blur-*` | 4–30px, 0.96–0.99, 2–8px | As in transitions.dev; `distance-toast` (16px) added for the toast rise |
+
+The old `--rx-duration-fast`, `--rx-duration-base`, `--rx-duration-slow` and `--rx-ease-standard` remain as aliases. Every duration is 0 with reduced motion.
+
+**Transitions in the components** (`components.css`):
+
+| Component | Transition | Behaviour |
+|---|---|---|
+| Buttons, icon buttons, rows, panels, fields | colour tokens | Colour and border in `duration-quick` / `ease-smooth-out`; buttons give to `scale-small` while pressed |
+| Text link with chevron | 24 learn-more hover | The chevron slides 2px and its arms spread into an arrow |
+| Dialog | 06 modal | Scales up from 0.96 in `duration-fast`; `.is-closing` scales down in `duration-quick` |
+| Toast | 22 toast | Rises 16px with fade and blur in `duration-medium`; `.is-closing` leaves in `duration-fast` |
+| Switch | 27 toggle | Thumb travels with `ease-bounce` in `duration-medium` |
+| Checkbox | 25 checkbox check | Box fills, then the tick draws in `duration-medium` |
+| Field error | 12 error shake | `.is-shaking` replays a 280ms shake on submit. Unlike the snippet, the error and its message stay until fixed |
+| Skeleton | 14 skeleton | Pulses (opacity 1 → 0.5, 1s); `.rx-reveal` content fades and unblurs in `duration-slow` |
+
+Entrances use `@starting-style`, so components are complete at rest and appear without JS. Movement still never happens for its own sake: every transition answers a state change, a press, or an explanatory canvas (see the explanatory canvases rule above).
 
 ## Components and their states
 
