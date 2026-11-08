@@ -1,5 +1,7 @@
 Calm, clear, and built around one loop: **start from a track, decide, save, and keep going.** This system replaces the brutal v2 look for every Resomix surface: the app (Today, Discover, Sessions, Library, Track Intelligence), the beta and the marketing site.
 
+Studio (dark) is the only theme. Every screen also passes [the professional standard](professional-standard.md), which turns these guidelines into rules and a pre-ship checklist. Tokens: [`tokens/v3/tokens.json`](../tokens/v3/tokens.json), generated as [`tokens/v3/tokens.css`](../tokens/v3/tokens.css) (`--ds-*` custom properties and `.ds-*` type classes).
+
 ## Principles
 
 1. **Decisions before data.** Every view answers "what should I do next?" above the fold, with at most three choices and one primary action. Data supports a decision; it is never decoration.
@@ -7,7 +9,7 @@ Calm, clear, and built around one loop: **start from a track, decide, save, and 
 3. **Keep my place.** Work opens in `WorkbenchTabs`: previews don't pile up, kept tabs come back when the user returns, closing a tab returns to where they were. Filters, open sections and the playing track are saved per tab.
 4. **Calm by default.** Neutral surfaces, one accent, quiet borders, generous space. Nothing blinks, nothing is uppercase, nothing competes with the primary action.
 5. **Show depth on request.** Summary first, details behind `Disclosure`, `Drawer` or a tab. Technical values exist, but only for those who open them.
-6. **Accessible is the baseline.** WCAG 2.2 AA in both themes, colour never the only signal, every action reachable by keyboard.
+6. **Accessible is the baseline.** WCAG 2.2 AA on every ground, colour never the only signal, every action reachable by keyboard.
 7. **Only what's live.** Never design a number, feature or claim the product doesn't have. Missing data shows "—".
 
 ## The product frame
@@ -43,10 +45,10 @@ The brutal "Resomix universe" is the brand's signature, and it belongs where peo
 
 ## Colour
 
-Two themes from one set of names: **Studio** (dark, default for the app) and **Daylight** (light, default for marketing body sections, documents and print). Components only use semantic tokens.
+One theme, **Studio** (dark), for the app, the beta and the marketing site alike. Components only use semantic tokens, never raw values or brand primitives.
 
 - Grounds: `bg-canvas` for the page, `bg-surface` for cards, rows and the sidebar, `bg-raised` for a block inside a card, `bg-sunken` for inputs and the tab strip, `bg-overlay` for anything floating. Hover is `bg-hover`. Never stack a ground on itself; step up or down one.
-- Text: `text-primary` for titles and values, `text-secondary` for supporting copy, `text-muted` for meta and hints. All three read at 4.5:1 or more on every `bg-` token in both themes. Small orange text is `text-accent`, never `accent`.
+- Text: `text-primary` for titles and values, `text-secondary` for supporting copy, `text-muted` for meta and hints. All three read at 4.5:1 or more on every `bg-` token (checked by `npm run check`). Small orange text is `text-accent`, never `accent`.
 - Edges: `border-default` around cards (decorative), `border-subtle` between rows, `border-control` around anything you can operate (3:1), `border-strong` on hover.
 - **Accent** (`accent`, the brand's neon orange `#EE4A26`) means exactly four things: the one primary action, the selected choice, what's playing, the current loop step. Text on it is `text-on-accent` (brand black). If two orange things compete in one view, one of them is wrong.
 - Status: `status-success` (Keep, Ready — teal), `status-warning` (Maybe, Queued — amber), `status-danger` (errors, destructive — red), `status-info` (Analysing — blue). Always paired with an icon and a word. Success is teal, not green, so it can't be confused with red. Pass is neutral, not red: it's a choice, not an error.
@@ -57,7 +59,8 @@ Two themes from one set of names: **Studio** (dark, default for the app) and **D
 
 - **Helvetica Neue** (`sans`) for everything people read: `page-title`, `section-title`, `card-title`, `body`, `body-sm`, `label`, `caption`. Sentence case everywhere. Nothing below 12px.
 - **Fira Code** (`mono`) only for numbers that people compare: BPM, key, duration, match score, counts in stat tiles, keyboard hints (`data-lg`, `data`, `data-sm`). Never for labels, buttons or headings, and never uppercase.
-- **Benzin** (`display`) only for marketing headlines: `display-xl` in a hero, `display-lg` once more per page at most. Never inside the app.
+- **Benzin** (`display`) only for marketing headlines: `display-xl` in a hero, `display-lg` once more per page at most. Never inside the app. `display-xl` is the only style that may be set in capitals; everything else, `display-lg` included, is sentence case.
+- Under 1024px the marketing styles step down (the `mobile` sizes in the tokens): `display-xl` 40px, `display-lg` 32px, `marketing-h2` 26px, `lead` 17px. Product styles keep their size.
 - Marketing section headings use `marketing-h2` (sans) with a `lead` paragraph. Paragraphs stop at `reading-max`.
 
 ## Space, shape and depth
@@ -71,7 +74,7 @@ Two themes from one set of names: **Studio** (dark, default for the app) and **D
 
 Every interactive element has rest, hover, focus-visible, pressed and disabled; toggles add selected.
 
-- **Focus** is a 2px `focus` ring with a 2px offset on everything, in both themes. Never remove it.
+- **Focus** is a 2px `focus` ring with a 2px offset on everything. Never remove it.
 - **Hover** lightens the fill (`bg-hover`, `accent-hover`) and strengthens the edge (`border-strong`).
 - **Selected** adds a 2px `accent` edge plus an icon or word (check, "Selected", "Playing"). Colour never carries the state alone.
 - **Disabled** uses `bg-sunken` and `text-disabled`. Prefer `aria-disabled` with a reason ("Add a reference track first") over a silent disabled control.
@@ -92,7 +95,7 @@ Every interactive element has rest, hover, focus-visible, pressed and disabled; 
 
 ## Accessibility
 
-- Contrast: text 4.5:1, large text, icons, control edges and focus 3:1 — on the ground they sit on, in both themes. The token usage notes name the grounds each text colour was checked on.
+- Contrast: text 4.5:1, large text, icons, control edges and focus 3:1 on the ground they sit on. `npm run check` tests every text, edge, status and data colour on every `bg-` token, and disabled text at 3:1.
 - Keyboard: ⌘K / Ctrl K opens search from anywhere; Space plays or pauses the focused track; K / M / P keep, maybe, pass; Esc closes the top overlay and returns focus; arrows move inside tab lists, radio groups and menus.
 - Semantics: `tablist`/`tab` for workbench tabs, `radiogroup`/`radio` for choice cards, `switch` for switches, `aria-current` for the current page and loop step, `aria-pressed` for triage and play, `role="status"`/`alert` for toasts, `aria-busy` while loading.
 - Targets are at least `target-min` (24px); main controls use `control-md` or larger.
@@ -104,7 +107,7 @@ Thin line icons on a 24px grid, 1.5px stroke, round caps and joins, drawn in `cu
 
 ## Logo
 
-Use the files in **Logos**: the wordmark on headers and footers, the signet "R" where space is tight (favicon, app icon, collapsed sidebar). White on `bg-canvas` in Studio, brand black on Daylight. Minimum width 50px for the wordmark, 25px for the signet. Don't stretch, recolour, outline, add effects, or rebuild it in type.
+Use the files in **Logos**: the wordmark on headers and footers, the signet "R" where space is tight (favicon, app icon, collapsed sidebar). White on `bg-canvas`. Minimum width 50px for the wordmark, 25px for the signet. Don't stretch, recolour, outline, add effects, or rebuild it in type.
 
 ## Moving from v2 (brutal)
 

@@ -1,6 +1,13 @@
 # Resomix design system
 
-The fonts, colours, spacing, patterns and components of the live Resomix app, as shown on [`/lab/design`](https://staging-frontend.resomix.com/lab/design), plus the tokens, icons and contrast check that keep them consistent.
+**The system of record is v3 "calm", Studio (dark) only.** New and changed screens on every surface (the app, the beta and resomix.com) follow it:
+
+- [The professional standard](docs/professional-standard.md): ten rules and the pre-ship checklist every screen must pass.
+- [The v3 guidelines](docs/guidelines-v3.md): principles, the product frame, colour, type, space, states and writing.
+- [The v3 tokens](tokens/v3/tokens.json), generated as [`tokens/v3/tokens.css`](tokens/v3/tokens.css): `--ds-*` custom properties in rem, and `.ds-*` classes for every type style.
+- `npm run check` tests every v3 text, edge, status and data colour on every ground.
+
+The rest of this page documents the **live app as it is today** (the `--rx-*` layer): the fonts, colours, spacing, patterns and components shown on [`/lab/design`](https://staging-frontend.resomix.com/lab/design), plus the tokens, icons and contrast check that keep them consistent while screens move to v3. The [v3 guidelines](docs/guidelines-v3.md#moving-from-v2-brutal) map each old token to its v3 name.
 
 > The screenshots and values below were taken from staging on 2026-10-31. Four colours have since been fixed for contrast in [`tokens/rx.json`](tokens/rx.json); they are marked **fixed** in the tables. See [the contrast audit](docs/contrast-audit.md).
 
@@ -368,12 +375,12 @@ The repo keeps two layers:
 
 | Layer | What it is | Files |
 |---|---|---|
-| **Live app (`--rx-*`)** | The tokens above, with the contrast fixes applied | `tokens/rx.json` (source), `tokens/rx.css`, `tokens/pixels.css` |
-| **v3 "calm"** | The direction the app is moving to: semantic tokens in two themes (Studio and Daylight), plus guidelines | `tokens/v3/tokens.json`, `docs/guidelines-v3.md` |
+| **v3 "calm" (system of record)** | Semantic tokens for the one theme, Studio (dark), plus the guidelines and the professional standard | `tokens/v3/tokens.json` (source), `tokens/v3/tokens.css`, `docs/guidelines-v3.md`, `docs/professional-standard.md` |
+| **Live app (`--rx-*`, legacy)** | The tokens above, with the contrast fixes applied. Kept while screens move to v3 | `tokens/rx.json` (source), `tokens/rx.css`, `tokens/pixels.css` |
 
 ```bash
-npm run build   # regenerate tokens/rx.css, tokens/pixels.css and docs/overview.svg from tokens/rx.json
-npm run check   # WCAG contrast check on every text, edge and theme pair
+npm run build   # regenerate tokens/v3/tokens.css, tokens/rx.css, tokens/pixels.css and docs/overview.svg
+npm run check   # WCAG contrast check: every v3 pair on every Studio ground, and the live layer's pairs
 npm test        # both, and fails if a generated file is out of date
 npm run capture # retake docs/lab-design/ screenshots and assets/icons/ from /lab/design (needs Chrome)
 ```

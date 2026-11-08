@@ -2,7 +2,7 @@
   "name": "@resomix/design-system",
   "version": "0.1.0",
   "private": true,
-  "description": "Resomix design tokens, guidelines and contrast checks for the live app and the v3 (calm) direction.",
+  "description": "Resomix design tokens, guidelines and contrast checks: v3 Studio (the system of record) and the live app's legacy layer.",
   "type": "module",
   "files": [
     "tokens",
@@ -13,11 +13,12 @@
     "./rx.css": "./tokens/rx.css",
     "./pixels.css": "./tokens/pixels.css",
     "./rx.json": "./tokens/rx.json",
-    "./v3/tokens.json": "./tokens/v3/tokens.json"
+    "./v3/tokens.json": "./tokens/v3/tokens.json",
+    "./v3/tokens.css": "./tokens/v3/tokens.css"
   },
   "scripts": {
-    "build": "node scripts/build.mjs && node scripts/overview.mjs",
-    "check": "node scripts/check-contrast.mjs",
+    "build": "node scripts/build.mjs && node scripts/build-v3.mjs && node scripts/overview.mjs",
+    "check": "node scripts/check-contrast.mjs && node scripts/check-v3.mjs",
     "test": "npm run build && npm run check && git diff --exit-code tokens/",
     "capture": "node --experimental-websocket scripts/capture-lab.mjs"
   },
