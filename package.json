@@ -14,11 +14,14 @@
     "./pixels.css": "./tokens/pixels.css",
     "./rx.json": "./tokens/rx.json",
     "./v3/tokens.json": "./tokens/v3/tokens.json",
-    "./v3/tokens.css": "./tokens/v3/tokens.css"
+    "./v3/tokens.css": "./tokens/v3/tokens.css",
+    "./v2/tokens.json": "./tokens/v2/tokens.json",
+    "./v2/tokens.css": "./tokens/v2/tokens.css",
+    "./v2/components.css": "./tokens/v2/components.css"
   },
   "scripts": {
-    "build": "node scripts/build.mjs && node scripts/build-v3.mjs && node scripts/overview.mjs",
-    "check": "node scripts/check-contrast.mjs && node scripts/check-v3.mjs",
+    "build": "node scripts/build.mjs && node scripts/build-v3.mjs && node scripts/build-v2.mjs && node scripts/overview.mjs",
+    "check": "node scripts/check-contrast.mjs && node scripts/check-v3.mjs && node scripts/check-v2.mjs",
     "test": "npm run build && npm run check && git diff --exit-code tokens/",
     "capture": "node --experimental-websocket scripts/capture-lab.mjs"
   },

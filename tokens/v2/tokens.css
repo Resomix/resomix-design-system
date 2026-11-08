@@ -1,0 +1,268 @@
+/* Generated from tokens/v2/tokens.json by scripts/build-v2.mjs. Do not edit by hand.
+   Needs tokens/pixels.css (the --px-N steps) loaded first. */
+:root {
+  color-scheme: dark;
+
+  /* Brand */
+  --rx-color-brand-orange: #ee4a26;
+  --rx-color-brand-black: #101010;
+  --rx-color-brand-gray: #b9b9b9;
+  --rx-color-brand-white: #ffffff;
+  /* Grounds */
+  --rx-color-canvas: #050505;
+  --rx-color-surface: #111111;
+  --rx-color-surface-raised: #171717;
+  --rx-color-sunken: #0a0a0a;
+  --rx-color-hover: #1c1c1c;
+  --rx-color-pressed: #222222;
+  --rx-color-overlay: #161616;
+  --rx-color-selected: #1e1412;
+  --rx-color-playing: #3d1c15;
+  --rx-color-accent-soft: #301914;
+  --rx-color-danger-soft: #2a1216;
+  --rx-color-scrim: rgba(0, 0, 0, 0.72);
+  /* Text */
+  --rx-color-text-primary: #f5f5f5;
+  --rx-color-text-secondary: #cfcfcf;
+  --rx-color-text-muted: #a3a3a3;
+  --rx-color-text-disabled: #8f8f8f;
+  --rx-color-text-accent: #ff7a5c;
+  --rx-color-text-on-accent: #050505;
+  --rx-color-text-danger: #ff6b7d;
+  /* Lines */
+  --rx-color-border-subtle: #1f1f1f;
+  --rx-color-border-default: #2e2e2e;
+  --rx-color-border-control: #757575;
+  --rx-color-border-strong: #a3a3a3;
+  /* Accent */
+  --rx-color-accent: #ee4a26;
+  --rx-color-accent-hover: #f46545;
+  --rx-color-accent-pressed: #e2431f;
+  --rx-color-focus: #ff8f74;
+  /* Status */
+  --rx-color-success: #63d28f;
+  --rx-color-warning: #f5b94a;
+  --rx-color-danger: #ff6b7d;
+  --rx-color-info: #7cb7ff;
+  /* Data */
+  --rx-color-match-track: #262626;
+  --rx-color-match-from: #5a2216;
+  --rx-color-match-tick: #f5f5f5;
+  --rx-color-score-neutral: #8f8f8f;
+
+  /* V2 names, kept so the live app picks up the fixes */
+  --rx-color-accent-text: var(--rx-color-text-accent);
+  --rx-color-on-accent: var(--rx-color-text-on-accent);
+  --rx-color-disabled: var(--rx-color-text-disabled);
+  --rx-color-error: var(--rx-color-danger);
+  --rx-color-score-fill: var(--rx-color-score-neutral);
+  --rx-color-overlay: var(--rx-color-hover);
+
+  --rx-font-sans: "Helvetica_Neue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --rx-font-mono: "Fira Code", ui-monospace, Menlo, Consolas, monospace;
+  --rx-font-display: Benzin, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --rx-space-0-5: var(--px-2);
+  --rx-space-1: var(--px-4);
+  --rx-space-2: var(--px-8);
+  --rx-space-3: var(--px-12);
+  --rx-space-4: var(--px-16);
+  --rx-space-5: var(--px-20);
+  --rx-space-6: var(--px-24);
+  --rx-space-8: var(--px-32);
+  --rx-space-10: var(--px-40);
+  --rx-space-12: var(--px-48);
+  --rx-space-16: var(--px-64);
+  --rx-space-20: var(--px-80);
+
+  --rx-radius-panel: 0;
+  --rx-radius-control: var(--px-2);
+  --rx-radius-round: 999px;
+  --rx-notch-sm: var(--px-6);
+  --rx-notch-md: var(--px-10);
+  --rx-notch-lg: var(--px-16);
+  --rx-mark-length: var(--px-24);
+  --rx-mark-thin: var(--px-2);
+  --rx-mark-thick: var(--px-4);
+  --rx-marker: var(--px-3);
+  --rx-rule-length: var(--px-40);
+  --rx-border-width: var(--px-1);
+
+  --rx-shadow-none: none;
+  --rx-shadow-overlay: 0 16px 40px rgba(0, 0, 0, 0.72);
+  --rx-ring: 0 0 0 1px #050505, 0 0 0 3px #ff8f74;
+
+  --rx-control-sm: var(--px-32);
+  --rx-control-md: var(--px-36);
+  --rx-control-lg: var(--px-44);
+  --rx-control-xl: var(--px-52);
+  --rx-icon-sm: var(--px-16);
+  --rx-icon-md: var(--px-20);
+  --rx-icon-lg: var(--px-24);
+  --rx-target-min: var(--px-24);
+  --rx-target-touch: var(--px-44);
+  --rx-content-max: 78rem;
+  --rx-reading-max: var(--px-680);
+
+  --rx-duration-fast: 120ms;
+  --rx-duration-base: 160ms;
+  --rx-duration-slow: 240ms;
+  --rx-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --rx-duration-fast: 0ms;
+    --rx-duration-base: 0ms;
+    --rx-duration-slow: 0ms;
+  }
+}
+
+.rx-display-xl {
+  font-family: var(--rx-font-display);
+  font-size: var(--px-64);
+  line-height: var(--px-64);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.rx-display-lg {
+  font-family: var(--rx-font-display);
+  font-size: var(--px-40);
+  line-height: var(--px-44);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.rx-title-lg {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-32);
+  line-height: var(--px-38);
+  font-weight: 300;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.rx-title {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-20);
+  line-height: var(--px-26);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.rx-card-title {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-16);
+  line-height: var(--px-22);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.rx-lead {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-18);
+  line-height: var(--px-28);
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
+.rx-body {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-15);
+  line-height: var(--px-24);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.rx-body-sm {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-13);
+  line-height: var(--px-20);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.rx-track-title {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-14);
+  line-height: var(--px-20);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.rx-caption {
+  font-family: var(--rx-font-sans);
+  font-size: var(--px-12);
+  line-height: var(--px-16);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.rx-kicker {
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-13);
+  line-height: var(--px-16);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-button {
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-13);
+  line-height: var(--px-16);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-label {
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-12);
+  line-height: var(--px-16);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-label-sm {
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-11);
+  line-height: var(--px-14);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-data {
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-13);
+  line-height: var(--px-16);
+  font-weight: 400;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-data-sm {
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-12);
+  line-height: var(--px-16);
+  font-weight: 400;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1023px) {
+  .rx-display-xl { font-size: var(--px-40); line-height: var(--px-44); }
+  .rx-display-lg { font-size: var(--px-32); line-height: var(--px-36); }
+  .rx-title-lg { font-size: var(--px-26); line-height: var(--px-32); }
+}

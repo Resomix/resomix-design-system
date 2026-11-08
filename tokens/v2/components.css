@@ -1,0 +1,476 @@
+/* Resomix V2.1 components. Hand-written; uses only --rx-* tokens from tokens/v2/tokens.css.
+   Every component lists its states: default, hover, active, focus, selected, disabled, busy, error.
+   Disabled = [disabled]; blocked = [aria-disabled="true"] (stays focusable, pressing it explains why). */
+
+/* ── Focus: one ring everywhere ─────────────────────────────────────────── */
+.rx-focus:focus-visible,
+.rx-btn:focus-visible,
+.rx-input:focus-visible,
+.rx-check:focus-visible,
+.rx-switch:focus-visible,
+.rx-panel--press:focus-visible,
+.rx-nav-link:focus-visible,
+.rx-tab:focus-visible,
+.rx-link:focus-visible,
+.rx-icon-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--rx-ring);
+}
+
+/* ── Kicker: accent rule, then the readout ──────────────────────────────── */
+.rx-kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--rx-space-4);
+  color: var(--rx-color-text-primary);
+}
+.rx-kicker::before {
+  content: "";
+  width: var(--rx-rule-length);
+  height: var(--rx-mark-thin);
+  background: var(--rx-color-accent);
+  flex: none;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.rx-btn {
+  --notch: var(--rx-notch-sm);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rx-space-2);
+  height: var(--rx-control-md);
+  min-width: var(--rx-target-min);
+  padding-inline: var(--rx-space-5);
+  border: var(--rx-border-width) solid transparent;
+  border-radius: var(--rx-radius-control);
+  background: transparent;
+  color: var(--rx-color-text-primary);
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-13);
+  line-height: var(--px-16);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--rx-duration-base) var(--rx-ease-standard),
+    border-color var(--rx-duration-base) var(--rx-ease-standard),
+    color var(--rx-duration-base) var(--rx-ease-standard);
+}
+.rx-btn--sm { height: var(--rx-control-sm); padding-inline: var(--rx-space-3); font-size: var(--px-12); }
+.rx-btn--lg { --notch: var(--rx-notch-md); height: var(--rx-control-lg); padding-inline: var(--rx-space-6); }
+.rx-btn--xl { --notch: var(--rx-notch-lg); height: var(--rx-control-xl); padding-inline: var(--rx-space-8); }
+.rx-btn svg { width: var(--rx-icon-sm); height: var(--rx-icon-sm); flex: none; }
+
+/* Primary: the one accent fill per view, cut at the top right. The fill is a layer so the
+   focus ring is never clipped by the cut. */
+.rx-btn--primary { color: var(--rx-color-text-on-accent); border-radius: 0; }
+.rx-btn--primary::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--rx-color-accent);
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+  transition: background-color var(--rx-duration-base) var(--rx-ease-standard);
+}
+.rx-btn--primary:hover::before { background: var(--rx-color-accent-hover); }
+.rx-btn--primary:active::before { background: var(--rx-color-accent-pressed); }
+.rx-btn--primary:is([disabled], [aria-disabled="true"], [aria-busy="true"]) { color: var(--rx-color-text-disabled); }
+.rx-btn--primary:is([disabled], [aria-disabled="true"], [aria-busy="true"])::before {
+  background: var(--rx-color-border-default);
+}
+.rx-btn--primary:is([disabled], [aria-disabled="true"], [aria-busy="true"])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--rx-color-surface-raised);
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+}
+
+/* Secondary: everything that is not the primary action. */
+.rx-btn--secondary { border-color: var(--rx-color-border-control); }
+.rx-btn--secondary:hover { border-color: var(--rx-color-border-strong); background: var(--rx-color-hover); }
+.rx-btn--secondary:active { background: var(--rx-color-pressed); }
+
+/* Danger: destructive, always confirms first. Pink-red, never the accent. */
+.rx-btn--danger { border-color: var(--rx-color-danger); color: var(--rx-color-text-danger); }
+.rx-btn--danger:hover { background: var(--rx-color-danger-soft); }
+.rx-btn--danger:active { background: var(--rx-color-pressed); }
+
+/* Ghost: icon-plus-label actions inside rows and toolbars. */
+.rx-btn--ghost { color: var(--rx-color-text-secondary); padding-inline: var(--rx-space-3); }
+.rx-btn--ghost:hover { color: var(--rx-color-text-primary); background: var(--rx-color-hover); }
+.rx-btn--ghost:active { background: var(--rx-color-pressed); }
+
+.rx-btn:not(.rx-btn--primary):is([disabled], [aria-disabled="true"], [aria-busy="true"]) {
+  border-color: var(--rx-color-border-default);
+  background: transparent;
+  color: var(--rx-color-text-disabled);
+}
+.rx-btn[disabled] { cursor: not-allowed; }
+.rx-btn[aria-busy="true"] { cursor: progress; }
+
+/* Square icon button (play, add, rate). */
+.rx-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: var(--rx-control-sm);
+  height: var(--rx-control-sm);
+  border: var(--rx-border-width) solid var(--rx-color-border-control);
+  border-radius: var(--rx-radius-control);
+  background: transparent;
+  color: var(--rx-color-text-primary);
+  cursor: pointer;
+  transition: background-color var(--rx-duration-fast) var(--rx-ease-standard), border-color var(--rx-duration-fast) var(--rx-ease-standard);
+}
+.rx-icon-btn--lg { width: var(--rx-control-lg); height: var(--rx-control-lg); }
+.rx-icon-btn svg { width: var(--rx-icon-md); height: var(--rx-icon-md); }
+.rx-icon-btn:hover { border-color: var(--rx-color-border-strong); background: var(--rx-color-hover); }
+.rx-icon-btn:active { background: var(--rx-color-pressed); }
+.rx-icon-btn[aria-pressed="true"] { background: var(--rx-color-playing); border-color: var(--rx-color-accent); }
+.rx-icon-btn:is([disabled], [aria-disabled="true"]) { border-color: var(--rx-color-border-default); color: var(--rx-color-text-disabled); }
+
+/* Text link: the readout voice, underlined. */
+.rx-link {
+  color: var(--rx-color-text-primary);
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-12);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--px-4);
+  text-decoration-color: var(--rx-color-border-control);
+  transition: text-decoration-color var(--rx-duration-fast) var(--rx-ease-standard);
+}
+.rx-link:hover { text-decoration-color: var(--rx-color-text-primary); }
+.rx-link--inline { font-family: inherit; font-size: inherit; letter-spacing: inherit; text-transform: none; font-weight: inherit; }
+
+/* ── Fields ─────────────────────────────────────────────────────────────── */
+.rx-field { display: grid; gap: var(--rx-space-2); min-width: 0; }
+.rx-field__label {
+  color: var(--rx-color-text-secondary);
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-12);
+  line-height: var(--px-16);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.rx-field__help { color: var(--rx-color-text-muted); font-size: var(--px-13); line-height: var(--px-20); }
+.rx-field__error {
+  display: flex;
+  gap: var(--rx-space-2);
+  align-items: flex-start;
+  color: var(--rx-color-text-danger);
+  font-size: var(--px-13);
+  line-height: var(--px-20);
+}
+.rx-field__error svg { width: var(--rx-icon-sm); height: var(--rx-icon-sm); flex: none; margin-top: var(--px-2); }
+.rx-input {
+  width: 100%;
+  height: var(--rx-control-md);
+  padding-inline: var(--rx-space-4);
+  border: var(--rx-border-width) solid var(--rx-color-border-control);
+  border-radius: var(--rx-radius-control);
+  background: var(--rx-color-sunken);
+  color: var(--rx-color-text-primary);
+  font: 400 var(--px-15) / var(--px-24) var(--rx-font-sans);
+  transition: border-color var(--rx-duration-fast) var(--rx-ease-standard);
+}
+.rx-input--lg { height: var(--rx-control-lg); }
+.rx-input::placeholder { color: var(--rx-color-text-muted); opacity: 1; }
+.rx-input:hover { border-color: var(--rx-color-border-strong); }
+.rx-input:focus-visible { border-color: var(--rx-color-focus); }
+.rx-input[aria-invalid="true"] { border-color: var(--rx-color-danger); }
+.rx-input:disabled { border-color: var(--rx-color-border-default); background: var(--rx-color-canvas); color: var(--rx-color-text-disabled); cursor: not-allowed; }
+.rx-input:read-only:not(:disabled) { border-style: dashed; border-color: var(--rx-color-border-default); }
+
+/* Checkbox (square) and radio (round). Native inputs, restyled. */
+.rx-check {
+  appearance: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--px-18);
+  height: var(--px-18);
+  margin: 0;
+  border: var(--rx-border-width) solid var(--rx-color-border-control);
+  border-radius: var(--rx-radius-control);
+  background: var(--rx-color-sunken);
+  cursor: pointer;
+  transition: border-color var(--rx-duration-fast) var(--rx-ease-standard), background-color var(--rx-duration-fast) var(--rx-ease-standard);
+}
+.rx-check[type="radio"] { border-radius: var(--rx-radius-round); }
+.rx-check:hover { border-color: var(--rx-color-border-strong); }
+.rx-check:checked { border-color: var(--rx-color-accent); background: var(--rx-color-accent); }
+.rx-check[type="checkbox"]:checked::after {
+  content: "";
+  width: var(--px-10);
+  height: var(--px-6);
+  border-left: 2px solid var(--rx-color-text-on-accent);
+  border-bottom: 2px solid var(--rx-color-text-on-accent);
+  transform: translateY(-1px) rotate(-45deg);
+}
+.rx-check[type="radio"]:checked { background: var(--rx-color-sunken); }
+.rx-check[type="radio"]:checked::after { content: ""; width: var(--px-8); height: var(--px-8); border-radius: var(--rx-radius-round); background: var(--rx-color-accent); }
+.rx-check[aria-invalid="true"] { border-color: var(--rx-color-danger); }
+.rx-check:disabled { border-color: var(--rx-color-border-default); background: var(--rx-color-canvas); cursor: not-allowed; }
+.rx-check:disabled:checked { background: var(--rx-color-border-default); }
+.rx-choice { display: inline-flex; align-items: center; gap: var(--rx-space-3); min-height: var(--rx-target-min); color: var(--rx-color-text-primary); font-size: var(--px-15); cursor: pointer; }
+.rx-choice:has(:disabled) { color: var(--rx-color-text-disabled); cursor: not-allowed; }
+
+/* Switch: square track and thumb. role="switch" on a button. */
+.rx-switch {
+  position: relative;
+  width: var(--px-40);
+  height: var(--px-22);
+  padding: 0;
+  border: var(--rx-border-width) solid var(--rx-color-border-control);
+  border-radius: var(--rx-radius-control);
+  background: var(--rx-color-sunken);
+  cursor: pointer;
+  transition: background-color var(--rx-duration-base) var(--rx-ease-standard), border-color var(--rx-duration-base) var(--rx-ease-standard);
+}
+.rx-switch::after {
+  content: "";
+  position: absolute;
+  top: var(--px-3);
+  left: var(--px-3);
+  width: var(--px-14);
+  height: var(--px-14);
+  border-radius: 1px;
+  background: var(--rx-color-text-secondary);
+  transition: transform var(--rx-duration-base) var(--rx-ease-standard), background-color var(--rx-duration-base) var(--rx-ease-standard);
+}
+.rx-switch:hover { border-color: var(--rx-color-border-strong); }
+.rx-switch[aria-checked="true"] { background: var(--rx-color-accent); border-color: var(--rx-color-accent); }
+.rx-switch[aria-checked="true"]::after { transform: translateX(var(--px-18)); background: var(--rx-color-text-on-accent); }
+.rx-switch:disabled { border-color: var(--rx-color-border-default); cursor: not-allowed; }
+.rx-switch:disabled::after { background: var(--rx-color-text-disabled); }
+
+/* ── Panels and cards ───────────────────────────────────────────────────── */
+/* Square, solid, hairline edge. The mark on the top edge says what the block is:
+   thin = it presents, thick = you can press it, none = a panel inside a panel. */
+.rx-panel {
+  --notch-ground: var(--rx-color-canvas);
+  position: relative;
+  display: grid;
+  gap: var(--rx-space-2);
+  padding: var(--rx-space-8);
+  background: var(--rx-color-surface);
+  border: var(--rx-border-width) solid var(--rx-color-border-default);
+  border-radius: var(--rx-radius-panel);
+  color: var(--rx-color-text-primary);
+  text-align: left;
+}
+.rx-panel::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: var(--rx-space-6);
+  width: var(--rx-mark-length);
+  height: var(--rx-mark-thin);
+  background: var(--rx-color-accent);
+}
+.rx-panel--plain::before { content: none; }
+.rx-panel--inset { padding: var(--rx-space-4) var(--rx-space-5); background: var(--rx-color-surface-raised); }
+.rx-panel--inset::before { content: none; }
+@media (max-width: 1023px) { .rx-panel { padding: var(--rx-space-6); } }
+
+.rx-panel--press {
+  border-color: var(--rx-color-border-control);
+  cursor: pointer;
+  font: inherit;
+  transition: background-color var(--rx-duration-base) var(--rx-ease-standard), border-color var(--rx-duration-base) var(--rx-ease-standard);
+}
+.rx-panel--press::before { height: var(--rx-mark-thick); }
+.rx-panel--press:hover { background: var(--rx-color-hover); border-color: var(--rx-color-border-strong); }
+.rx-panel--press:active { background: var(--rx-color-pressed); }
+/* Selected: accent edge, tint, and the cut corner (drawn with the ground colour so the edge
+   follows the cut). Set --notch-ground to whatever the card sits on. */
+.rx-panel--press:is([aria-checked="true"], [aria-selected="true"], [aria-current="true"]) {
+  background: var(--rx-color-selected);
+  border-color: var(--rx-color-accent);
+}
+.rx-panel--press:is([aria-checked="true"], [aria-selected="true"], [aria-current="true"])::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: var(--rx-notch-md);
+  height: var(--rx-notch-md);
+  background: linear-gradient(225deg, var(--notch-ground) calc(50% - 0.5px), var(--rx-color-accent) calc(50% - 0.5px), var(--rx-color-accent) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+}
+.rx-panel--press:is([disabled], [aria-disabled="true"]) { border-color: var(--rx-color-border-default); background: var(--rx-color-surface); color: var(--rx-color-text-disabled); cursor: not-allowed; }
+.rx-panel--press:is([disabled], [aria-disabled="true"])::before { background: var(--rx-color-border-default); }
+
+/* OUTPUT // RANKED SIMILARITY PLAYLIST */
+.rx-readout { display: flex; flex-wrap: wrap; gap: var(--rx-space-2); color: var(--rx-color-text-primary); }
+.rx-readout__sep { color: var(--rx-color-text-accent); }
+
+/* ── Badges and tags ────────────────────────────────────────────────────── */
+.rx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rx-space-2);
+  min-height: var(--rx-target-min);
+  padding: var(--rx-space-0-5) var(--rx-space-3);
+  border: var(--rx-border-width) solid var(--rx-color-border-control);
+  border-radius: var(--rx-radius-control);
+  color: var(--rx-color-text-primary);
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-12);
+  line-height: var(--px-16);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rx-badge--accent { background: var(--rx-color-accent-soft); border-color: var(--rx-color-accent); color: var(--rx-color-text-accent); }
+.rx-badge--success, .rx-badge--warning, .rx-badge--danger, .rx-badge--info { border-color: var(--rx-color-border-default); color: var(--rx-color-text-secondary); }
+.rx-badge--success::before, .rx-badge--warning::before, .rx-badge--danger::before, .rx-badge--info::before, .rx-badge--accent::before {
+  content: "";
+  width: var(--px-6);
+  height: var(--px-6);
+  border-radius: var(--rx-radius-round);
+  background: currentColor;
+}
+.rx-badge--success::before { background: var(--rx-color-success); }
+.rx-badge--warning::before { background: var(--rx-color-warning); }
+.rx-badge--danger::before { background: var(--rx-color-danger); }
+.rx-badge--info::before { background: var(--rx-color-info); }
+
+/* ── Navigation ─────────────────────────────────────────────────────────── */
+.rx-nav { display: flex; gap: var(--rx-space-6); align-items: center; }
+.rx-nav-link, .rx-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--rx-control-lg);
+  color: var(--rx-color-text-secondary);
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-12);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--rx-duration-fast) var(--rx-ease-standard);
+}
+.rx-nav-link:hover, .rx-tab:hover { color: var(--rx-color-text-primary); }
+.rx-nav-link[aria-current="page"], .rx-tab[aria-selected="true"] { color: var(--rx-color-text-primary); }
+.rx-nav-link[aria-current="page"]::after, .rx-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--rx-mark-length);
+  height: var(--rx-mark-thin);
+  background: var(--rx-color-accent);
+}
+.rx-tabs { display: flex; gap: var(--rx-space-6); border-bottom: var(--rx-border-width) solid var(--rx-color-border-default); }
+.rx-tab { background: none; border: 0; padding: 0; cursor: pointer; }
+.rx-tab[aria-disabled="true"] { color: var(--rx-color-text-disabled); cursor: not-allowed; }
+
+/* ── Results: rows and the match bar ────────────────────────────────────── */
+.rx-table { border: var(--rx-border-width) solid var(--rx-color-border-default); background: var(--rx-color-surface); }
+.rx-thead {
+  background: var(--rx-color-sunken);
+  border-bottom: var(--rx-border-width) solid var(--rx-color-border-default);
+  color: var(--rx-color-text-muted);
+  font-family: var(--rx-font-mono);
+  font-size: var(--px-11);
+  line-height: var(--px-14);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.rx-row {
+  position: relative;
+  background: var(--rx-color-surface);
+  border-bottom: var(--rx-border-width) solid var(--rx-color-border-subtle);
+  transition: background-color var(--rx-duration-fast) var(--rx-ease-standard);
+}
+.rx-row:nth-child(even) { background: var(--rx-color-surface-raised); }
+.rx-row:hover, .rx-row:focus-within { background: var(--rx-color-hover); }
+.rx-row:focus-within { box-shadow: inset 0 0 0 2px var(--rx-color-focus); }
+.rx-row::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--rx-marker); background: transparent; }
+.rx-row[aria-selected="true"] { background: var(--rx-color-selected); }
+.rx-row[aria-selected="true"]::before, .rx-row[data-state="playing"]::before { background: var(--rx-color-accent); }
+.rx-row[data-state="playing"] { background: var(--rx-color-playing); }
+.rx-row[data-state="paused"]::before { background: var(--rx-color-border-strong); }
+.rx-row[data-state="failed"]::before { background: var(--rx-color-danger); }
+.rx-row[data-state="unavailable"] { color: var(--rx-color-text-disabled); }
+.rx-row[data-state="unavailable"] :is(.rx-track-title, .rx-data) { color: var(--rx-color-text-disabled); }
+.rx-rank { color: var(--rx-color-text-muted); }
+.rx-row:first-child .rx-rank { color: var(--rx-color-text-accent); }
+
+.rx-match { display: grid; gap: var(--rx-space-1); justify-items: end; min-width: var(--px-96); }
+.rx-match__bar { position: relative; width: 100%; height: var(--px-6); background: var(--rx-color-match-track); }
+.rx-match__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--score) * 100%);
+  background: linear-gradient(90deg, var(--rx-color-match-from), var(--rx-color-accent));
+}
+.rx-match__fill::after { content: ""; position: absolute; right: 0; top: -2px; bottom: -2px; width: 2px; background: var(--rx-color-match-tick); }
+.rx-match__value { color: var(--rx-color-text-primary); }
+.rx-match__top { color: var(--rx-color-text-accent); }
+
+/* ── Feedback ───────────────────────────────────────────────────────────── */
+.rx-toast, .rx-alert {
+  --tone: var(--rx-color-info);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--rx-space-3);
+  align-items: start;
+  padding: var(--rx-space-4) var(--rx-space-4) var(--rx-space-4) var(--rx-space-5);
+  border: var(--rx-border-width) solid var(--rx-color-border-strong);
+  border-radius: var(--rx-radius-panel);
+  background: var(--rx-color-overlay);
+  color: var(--rx-color-text-primary);
+}
+.rx-toast { box-shadow: var(--rx-shadow-overlay); max-width: var(--px-400); }
+.rx-toast::before, .rx-alert::before { content: ""; position: absolute; inset: -1px auto -1px -1px; width: var(--rx-marker); background: var(--tone); }
+.rx-toast > svg, .rx-alert > svg { width: var(--rx-icon-md); height: var(--rx-icon-md); color: var(--tone); }
+.rx-toast--success, .rx-alert--success { --tone: var(--rx-color-success); }
+.rx-toast--warning, .rx-alert--warning { --tone: var(--rx-color-warning); }
+.rx-toast--danger, .rx-alert--danger { --tone: var(--rx-color-danger); }
+.rx-toast--loading { --tone: var(--rx-color-border-strong); }
+.rx-alert { border-color: var(--rx-color-border-default); background: var(--rx-color-surface); }
+.rx-alert--danger { background: var(--rx-color-danger-soft); }
+.rx-toast__title { font-weight: 500; font-size: var(--px-15); line-height: var(--px-20); }
+.rx-toast__body { color: var(--rx-color-text-secondary); font-size: var(--px-13); line-height: var(--px-20); }
+
+.rx-dialog {
+  display: grid;
+  gap: var(--rx-space-5);
+  width: min(100%, var(--px-480));
+  padding: var(--rx-space-8);
+  background: var(--rx-color-overlay);
+  border: var(--rx-border-width) solid var(--rx-color-border-strong);
+  border-radius: var(--rx-radius-panel);
+  box-shadow: var(--rx-shadow-overlay);
+}
+.rx-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--rx-space-3); }
+
+.rx-skeleton {
+  display: block;
+  height: var(--px-14);
+  background: linear-gradient(90deg, var(--rx-color-surface-raised) 0, var(--rx-color-hover) 50%, var(--rx-color-surface-raised) 100%);
+  background-size: 200% 100%;
+  animation: rx-shimmer 1.4s linear infinite;
+}
+@keyframes rx-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .rx-skeleton { animation: none; } }
+
+.rx-empty { display: grid; justify-items: start; gap: var(--rx-space-4); padding: var(--rx-space-8); border: var(--rx-border-width) dashed var(--rx-color-border-default); }
+
+.rx-progress { height: var(--px-4); background: var(--rx-color-match-track); }
+.rx-progress > span { display: block; height: 100%; width: calc(var(--value) * 100%); background: var(--rx-color-accent); }
