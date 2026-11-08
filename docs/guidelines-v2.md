@@ -87,6 +87,7 @@ Each style is a class (`.rx-title-lg`) and its sizes use `--px-N`, so the type s
 - **Focus**: `ring` = 1px canvas gap, then a 2px `focus` ring, on every focusable thing, never removed. Rows use a 2px inset ring.
 - **Size**: controls 32 / 36 / 44 / 52; icons 16 / 20 / 24; target minimum 24 (WCAG 2.5.8), 44 for main controls on phones; content 78rem; reading 680px.
 - **Motion**: fades and colour changes only. 120ms (rows), 160ms (buttons, cards), 240ms (a panel or toast arriving); 0 with reduced motion.
+- **Explanatory canvases** (marketing only): a Canvas 2D diagram may move when the movement is the explanation, such as a playhead crossing a waveform, bars building into a profile, or match bars filling in rank order. Draw with the tokens, animate only while on screen, draw the finished frame with reduced motion and before the canvas is first seen, and give the canvas `role="img"` with a description. One per step, never as background decoration.
 
 ## Components and their states
 
